@@ -315,6 +315,7 @@ GLOBAL_LIST_INIT(default_all_armor_slot_allowed, typecacheof(list(
 	/obj/item/tank/internals,
 	/obj/item/restraints/legcuffs/bola,
 	/obj/item/kitchen,
+	/obj/item/kinetic_crusher,
 	/obj/item/toy
 	)))
 

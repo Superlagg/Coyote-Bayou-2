@@ -298,9 +298,8 @@
 
 /obj/item/gun/ballistic/rifle/hunting
 	name = "hunting rifle"
-	desc = "A sturdy hunting rifle, chambered in .30-06. and in use before the war."
-	icon = 'icons/obj/guns/projectile.dmi'
-	icon_state = "hunting_rifle"
+	desc = "A sturdy hunting rifle, chambered in .30-06 Springfield."
+	icon_state = "308"
 	item_state = "308"
 	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/hunting
 	sawn_desc = "A hunting rifle, crudely shortened with a saw. It's far from accurate, but the short barrel makes it quite portable."
@@ -360,8 +359,8 @@
  * * * * * * * * * * */
 
 /obj/item/gun/ballistic/rifle/hunting/remington
-	name = "Remington rifle"
-	desc = "A militarized hunting rifle rechambered to 7.62. This one has had the barrel floated with shims to increase accuracy."
+	name = "Remington 700"
+	desc = "This bolt action rifle was popular among hunters, police, and the military before the War."
 	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/hunting/remington
 	weapon_class = WEAPON_CLASS_RIFLE
 	weapon_weight = GUN_TWO_HAND_ONLY

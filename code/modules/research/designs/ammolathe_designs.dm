@@ -468,7 +468,7 @@
 	category = list("initial", "Basic Ammo")
 
 /datum/design/ammolathe/a762rubber
-	name = "7.62 rubber ammo box"
+	name = ".308 rubber ammo box"
 	id = "a762_lathe_rubber"
 	materials = list(/datum/material/iron = 10000, /datum/material/blackpowder = 1500)
 	build_path = /obj/item/ammo_box/a308box/rubber
@@ -555,14 +555,14 @@
 	category = list("initial", "Intermediate Magazines")
 
 /datum/design/ammolathe/sks308
-	name = "empty sks en-bloc clip (7.62mm/.308)"
+	name = "empty sks en-bloc clip (.308)"
 	id = "sks308"
 	materials = list(/datum/material/iron = 4000)
 	build_path = /obj/item/ammo_box/magazine/sks/empty
 	category = list("initial", "Intermediate Magazines")
 
 /datum/design/ammolathe/rev308
-	name = "Empty 7.62mm/.308 Speedloader"
+	name = ".308 Speedloader"
 	id = "rev308"
 	materials = list(/datum/material/iron = 6000)
 	build_path = /obj/item/ammo_box/rev308/empty
