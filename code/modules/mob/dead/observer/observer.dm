@@ -157,9 +157,11 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	animate(src, color = old_color, time = 10, flags = ANIMATION_PARALLEL)
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_atom_colour)), 10)
 
-/mob/dead/observer/Destroy()
+/mob/dead/observer/Destroy(force)
 	GLOB.ghost_images_default -= ghostimage_default
 	QDEL_NULL(ghostimage_default)
+	if(data_huds_on)
+		remove_data_huds()
 
 	GLOB.ghost_images_simple -= ghostimage_simple
 	QDEL_NULL(ghostimage_simple)
@@ -174,6 +176,12 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 		QDEL_LIST(client.screen)
 		client.screen = null
 
+	//hard del stopgap
+	if(!force)
+		mouse_opacity = FALSE
+		alpha = 32
+		return QDEL_HINT_LETMELIVE
+	//Just try to get past me
 	return ..()
 
 /mob/dead/CanAllowThrough(atom/movable/mover, border_dir)
