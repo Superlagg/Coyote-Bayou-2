@@ -222,9 +222,6 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		m.temporarilyRemoveItemFromInventory(src, TRUE)
 	for(var/X in actions)
 		qdel(X)
-	// Clean up item upgrades to break circular references
-	QDEL_LIST(item_upgrades)
-	item_upgrades = null
 	..()
 	moveToNullspace()
 	return QDEL_HINT_LETMELIVE
