@@ -225,7 +225,8 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	// Clean up item upgrades to break circular references
 	QDEL_LIST(item_upgrades)
 	item_upgrades = null
-	return ..()
+	moveToNullspace()
+	return QDEL_HINT_LETMELIVE
 
 /obj/item/ComponentInitialize()
 	. = ..()
