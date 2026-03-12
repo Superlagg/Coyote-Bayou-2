@@ -1374,8 +1374,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	deet += "<div class='gen_container'>"
 	deet += "<div class='gen_setting_name'>Has [one_or_some]:</div>" // everyone can has_cheezburger
 	/// yes I know it cursed, eat the dick this pref gave me
-	deet += {"<a 
-				class='clicky' 
+	deet += {"<a
+				class='clicky'
 				href='
 					?_src_=prefs;
 					preference=[erp_tab_page]'>
@@ -1386,10 +1386,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		if(pref_species.use_skintones)
 			deet += "<div class='gen_setting_name'>Locked to skintone!</div>"
 		else
-			deet += {"<a 
+			deet += {"<a
 						class='clicky'
 						style='
-							background-color:#[features["[feature_key]_color"]]' 
+							background-color:#[features["[feature_key]_color"]]'
 						href='
 							?_src_=prefs;
 							preference=[feature_key]_color;
@@ -1398,8 +1398,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					</a>"}
 	if(CHECK_BITFIELD(setup_flags, GENITAL_CAN_RESHAPE))
 		deet += "<div class='gen_setting_name'>Shape:</div>"
-		deet += {"<a 
-					class='clicky' 
+		deet += {"<a
+					class='clicky'
 					href='
 						?_src_=prefs;
 						preference=[feature_key]_shape;
@@ -1408,8 +1408,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				</a>"}
 	if(CHECK_BITFIELD(setup_flags, GENITAL_CAN_RESIZE))
 		deet += "<div class='gen_setting_name'>Size:</div>"
-		deet += {"<a 
-					class='clicky' 
+		deet += {"<a
+					class='clicky'
 					href='
 						?_src_=prefs;
 						preference=[feature_key]_size;
@@ -1474,7 +1474,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		doot += "<td class='genital_arrow_off'>&darr;</td>" // im gonna do a magic trick
 	else // make an up arrow
 		doot += {"<td class='genital_arrow_on'>
-				<a 
+				<a
 					class='clicky_no_border'
 					href='
 						?_src_=prefs;
@@ -1488,8 +1488,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		doot += "<td class='genital_arrow_off'>&darr;</td>" // imma make these disappear!
 	else // make a down arrow
 		doot += {"<td class='genital_arrow_on'>
-				<a 
-					class='clicky_no_border' 
+				<a
+					class='clicky_no_border'
 					href='
 						?_src_=prefs;
 						preference=change_genital_order;
@@ -1500,8 +1500,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				</td>"}
 	// and throw in the coverage buttons
 	doot += {"<td class='[CHECK_BITFIELD(features[flag_string], GENITAL_RESPECT_CLOTHING)? "coverage_on" : "coverage_off"]'>
-		<a 
-			class='clicky_no_border' 
+		<a
+			class='clicky_no_border'
 			href='
 				?_src_=prefs;
 				preference=[flag_string];
@@ -1511,8 +1511,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		</a>
 		</td>"}
 	doot += {"<td class='[CHECK_BITFIELD(features[flag_string], GENITAL_RESPECT_UNDERWEAR)? "coverage_on" : "coverage_off"]'>
-		<a 
-			class='clicky_no_border' 
+		<a
+			class='clicky_no_border'
 			href='
 				?_src_=prefs;
 				preference=[flag_string];
@@ -1530,8 +1530,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	else
 		peen_vis_override = "Check Coverage"
 	doot += {"<td class='[CHECK_BITFIELD(features[flag_string], GENITAL_ALWAYS_HIDDEN|GENITAL_ALWAYS_VISIBLE)? "coverage_on" : "coverage_off"]'>
-		<a 
-			class='clicky_no_border' 
+		<a
+			class='clicky_no_border'
 			href='
 				?_src_=prefs;
 				preference=[override_string];
@@ -1543,8 +1543,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	/// and the hideflag
 	var/i_dont_like_bellies = CHECK_BITFIELD(features["genital_hide"], hide_nad_flag)
 	doot += {"<td class='[i_dont_like_bellies ? "coverage_off" : "coverage_on"]'>
-		<a 
-			class='clicky_no_border' 
+		<a
+			class='clicky_no_border'
 			href='
 				?_src_=prefs;
 				preference=genital_hide;
@@ -1578,9 +1578,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	if(!genital_start || !genital_dest)
 		return // nothing found!
 	our_genitals.Swap(genital_start, genital_dest) // swap!
-	if(move_up) // unreverse, 
+	if(move_up) // unreverse,
 		our_genitals = reverseList(our_genitals)
-	encode_cockstring(our_genitals) // post it!	
+	encode_cockstring(our_genitals) // post it!
 
 /datum/preferences/proc/CaptureKeybinding(mob/user, datum/keybinding/kb, old_key, independent = FALSE, special = FALSE)
 	var/HTML = {"
@@ -1961,7 +1961,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		shift_genital_order(href_list["which"], (href_list["direction"]=="up"))
 	if(href_list["preference"] == "change_genital_whitelist")
 		var/new_genital_whitelist = stripped_multiline_input_or_reflect(
-			user, 
+			user,
 			"Which people are you okay with seeing their genitals when exposed? If a humanlike mob has a name containing \
 			any of the following, if their genitals are showing, you will be able to see them, regardless of your \
 			content settings. Partial names are accepted, case is not important, please no punctuation (except ','). \
@@ -3076,6 +3076,110 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(selected_body_sprite)
 						chosen_limb_id = selected_body_sprite //this gets sanitized before loading
 
+				if("marking_down")
+					// move the specified marking down
+					var/index = text2num(href_list["marking_index"])
+					var/marking_type = href_list["marking_type"]
+					if(index && marking_type && features[marking_type] && index != length(features[marking_type]))
+						var/index_down = index + 1
+						var/markings = features[marking_type]
+						var/first_marking = markings[index]
+						var/second_marking = markings[index_down]
+						markings[index] = second_marking
+						markings[index_down] = first_marking
+
+				if("marking_up")
+					// move the specified marking up
+					var/index = text2num(href_list["marking_index"])
+					var/marking_type = href_list["marking_type"]
+					if(index && marking_type && features[marking_type] && index != 1)
+						var/index_up = index - 1
+						var/markings = features[marking_type]
+						var/first_marking = markings[index]
+						var/second_marking = markings[index_up]
+						markings[index] = second_marking
+						markings[index_up] = first_marking
+
+				if("marking_remove")
+					// move the specified marking up
+					var/index = text2num(href_list["marking_index"])
+					var/marking_type = href_list["marking_type"]
+					if(index && marking_type && features[marking_type])
+						// because linters are just absolutely awful:
+						var/list/L = features[marking_type]
+						L.Cut(index, index + 1)
+
+				if("marking_add")
+					// add a marking
+					var/marking_type = href_list["marking_type"]
+					if(marking_type && features[marking_type])
+						var/selected_limb = input(user, "Choose the limb to apply to.", "Character Preference") as null|anything in list("Head", "Chest", "Left Arm", "Right Arm", "Left Leg", "Right Leg", "All")
+						if(selected_limb)
+							var/list/marking_list = GLOB.mam_body_markings_list
+							var/list/snowflake_markings_list = list()
+							for(var/path in marking_list)
+								var/datum/sprite_accessory/S = marking_list[path]
+								if(istype(S))
+									if(istype(S, /datum/sprite_accessory/mam_body_markings))
+										var/datum/sprite_accessory/mam_body_markings/marking = S
+										if(!(selected_limb in marking.covered_limbs) && selected_limb != "All")
+											continue
+
+									if((!S.ckeys_allowed) || (S.ckeys_allowed.Find(user.client.ckey)))
+										snowflake_markings_list[S.name] = path
+
+							var/selected_marking = input(user, "Select the marking to apply to the limb.") as null|anything in snowflake_markings_list
+							if(selected_marking)
+								if(selected_limb != "All")
+									var/limb_value = text2num(GLOB.bodypart_values[selected_limb])
+									features[marking_type] += list(list(limb_value, selected_marking))
+								else
+									var/datum/sprite_accessory/mam_body_markings/S = marking_list[selected_marking]
+									for(var/limb in S.covered_limbs)
+										var/limb_value = text2num(GLOB.bodypart_values[limb])
+										features[marking_type] += list(list(limb_value, selected_marking))
+
+				if("marking_color")
+					var/index = text2num(href_list["marking_index"])
+					var/marking_type = href_list["marking_type"]
+					if(index && marking_type && features[marking_type])
+						// work out the input options to show the user
+						var/list/options = list("Primary")
+						var/number_colors = text2num(href_list["number_colors"])
+						var/color_number = 1 // 1-3 which color are we editing
+						if(number_colors >= 2)
+							options += "Secondary"
+						if(number_colors == 3)
+							options += "Tertiary"
+						var/color_option = input(user, "Select the colour you wish to edit") as null|anything in options
+						if(color_option)
+							if(color_option == "Secondary") color_number = 2
+							if(color_option == "Tertiary") color_number = 3
+							// perform some magic on the color number
+							var/list/marking_list = features[marking_type][index]
+							var/datum/sprite_accessory/mam_body_markings/S = GLOB.mam_body_markings_list[marking_list[2]]
+							var/matrixed_sections = S.covered_limbs[GLOB.bodypart_names[num2text(marking_list[1])]]
+							if(color_number == 1)
+								switch(matrixed_sections)
+									if(MATRIX_GREEN)
+										color_number = 2
+									if(MATRIX_BLUE)
+										color_number = 3
+							else if(color_number == 2)
+								switch(matrixed_sections)
+									if(MATRIX_RED_BLUE)
+										color_number = 3
+									if(MATRIX_GREEN_BLUE)
+										color_number = 3
+
+							var/color_list = features[marking_type][index][3]
+							var/new_marking_color = input(user, "Choose your character's marking color:", "Character Preference","#"+color_list[color_number]) as color|null
+							if(new_marking_color)
+								var/temp_hsv = RGBtoHSV(new_marking_color)
+								if((MUTCOLORS_PARTSONLY in pref_species.species_traits) || ReadHSV(temp_hsv)[3] >= ReadHSV(MINIMUM_MUTANT_COLOR)[3]) // mutantcolors must be bright, but only if they affect the skin
+									color_list[color_number] = "#[sanitize_hexcolor(new_marking_color, 6)]"
+								else
+									to_chat(user, span_danger("Invalid color. Your color is not bright enough."))
 		else
 			switch(href_list["preference"])
 				//CITADEL PREFERENCES EDIT - I can't figure out how to modularize these, so they have to go here. :c -Pooj
@@ -3560,6 +3664,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.dna.real_name = character.real_name
 	character.dna.custom_species = character.custom_species
 
+	if((parent && parent.can_have_part("meat_type")) || pref_species.mutant_bodyparts["meat_type"])
+		character.type_of_meat = GLOB.meat_types[features["meat_type"]]
+
 	if(((parent && parent.can_have_part("legs")) || pref_species.mutant_bodyparts["legs"])  && (character.dna.features["legs"] == "Digitigrade" || character.dna.features["legs"] == "Avian"))
 		pref_species.species_traits |= DIGITIGRADE
 	else
@@ -3569,6 +3676,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		character.Digitigrade_Leg_Swap(FALSE)
 	else
 		character.Digitigrade_Leg_Swap(TRUE)
+
+	character.give_genitals(TRUE) //character.update_genitals() is already called on genital.update_appearance()
 
 	character.dna.update_body_size(old_size)
 

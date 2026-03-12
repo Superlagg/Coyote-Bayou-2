@@ -16,11 +16,8 @@
 	icon_dead = "feverblossom-dead"
 	mutatelist = list()
 	reagents_add = list(
-		/datum/reagent/consumable/nutriment = 0.05,
-		/datum/reagent/medicine/medx = 0.01,
-		/datum/reagent/drug/psycho = 0.01,
-		/datum/reagent/drug/jet = 0.04,
-		/datum/reagent/uranium = 0.05
+		/datum/reagent/drug/aphrodisiac = 0.2,
+		/datum/reagent/consumable/nutriment = 0.05
 	)
 
 /obj/item/reagent_containers/food/snacks/grown/fever_blossom

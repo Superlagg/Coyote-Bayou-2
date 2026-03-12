@@ -374,6 +374,26 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
+		if(NOGENITALS in H.dna.species.species_traits)
+			H.give_genitals(TRUE) //call the clean up proc to delete anything on the mob then return.
+		if(mutant_bodyparts["meat_type"]) //I can't believe it's come to the meat
+			H.type_of_meat = GLOB.meat_types[H.dna.features["meat_type"]]
+
+		if(H.physiology)
+			if(mutant_bodyparts["taur"])
+				var/datum/sprite_accessory/taur/T = GLOB.taur_list[H.dna.features["taur"]]
+				switch(T?.taur_mode)
+					if(STYLE_HOOF_TAURIC)
+						H.physiology.footstep_type = FOOTSTEP_MOB_SHOE
+					if(STYLE_PAW_TAURIC)
+						H.physiology.footstep_type = FOOTSTEP_MOB_CLAW
+					if(STYLE_SNEK_TAURIC)
+						H.physiology.footstep_type = FOOTSTEP_MOB_CRAWL
+					else
+						H.physiology.footstep_type = null
+			else
+				H.physiology.footstep_type = null
+
 		if(H.client && has_field_of_vision && CONFIG_GET(flag/use_field_of_vision))
 			H.LoadComponent(/datum/component/field_of_vision, H.field_of_vision_type)
 
@@ -404,6 +424,10 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 	C.remove_movespeed_modifier(/datum/movespeed_modifier/species)
 
+	if(mutant_bodyparts["meat_type"])
+		C.type_of_meat = GLOB.meat_types[C.dna.features["meat_type"]]
+	else
+		C.type_of_meat = initial(meat)
 
 	//If their inert mutation is not the same, swap it out
 	if((inert_mutation != new_species.inert_mutation) && LAZYLEN(C.dna.mutation_index) && (inert_mutation in C.dna.mutation_index))
@@ -633,7 +657,10 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 	//Underwear, Undershirts & Socks
 	if(!(NO_UNDERWEAR in species_traits))
-		if(H.socks && !H.hidden_socks && H.get_num_legs(FALSE) >= 2)
+		var/datum/sprite_accessory/taur/TA
+		if(mutant_bodyparts["taur"] && H.dna.features["taur"])
+			TA = GLOB.taur_list[H.dna.features["taur"]]
+		if(!(TA?.hide_legs) && H.socks && !H.hidden_socks && H.get_num_legs(FALSE) >= 2)
 			if(H.saved_socks)
 				H.socks = H.saved_socks
 				H.saved_socks = ""
@@ -1580,6 +1607,29 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		user.do_attack_animation(target, ATTACK_EFFECT_FACE_SLAP)
 		user.adjustStaminaLossBuffered(3)
 		return FALSE
+	else if(aim_for_groin && (target == user || target.lying || same_dir) && (target_on_help || target_restrained || target_aiming_for_groin))
+		if(target.client?.prefs.cit_toggles & NO_ASS_SLAP)
+			to_chat(user,"A force stays your hand, preventing you from slapping \the [target]'s ass!")
+			return FALSE
+		user.do_attack_animation(target, ATTACK_EFFECT_ASS_SLAP)
+		playsound(target.loc, 'sound/weapons/slap.ogg', 50, 1, -1)
+		if(HAS_TRAIT(target, TRAIT_STEEL_ASS))
+			user.adjustStaminaLoss(50)
+			user.visible_message(\
+				"<span class='danger'>\The [user] slaps \the [target]'s ass, but their hand bounces off like they hit metal!</span>",\
+				"<span class='danger'>You slap [user == target ? "your" : "\the [target]'s"] ass, but feel an intense amount of pain as you realise their buns are harder than steel!</span>",\
+				"You hear a slap.")
+			return FALSE
+		user.adjustStaminaLossBuffered(3)
+		target.adjust_arousal(20,maso = TRUE)
+		if (ishuman(target) && HAS_TRAIT(target, TRAIT_MASO) && target.has_dna() && prob(10))
+			target.mob_climax(forced_climax=TRUE)
+		if (!HAS_TRAIT(target, TRAIT_PERMABONER))
+			stop_wagging_tail(target)
+		target.visible_message(\
+			span_danger("\The [user] slaps [user == target ? "[user.p_their()] own" : "\the [target]'s"] ass!"),\
+			span_notice("[user] slaps your ass! "),\
+			"You hear a slap.", target = user, target_message = span_notice("You slap [user == target ? "your own" : "\the [target]'s"] ass! "))
 
 //BONK chucklehead!
 	else if(aim_for_head && ( target_on_help || target_restrained || target_aiming_for_head))
@@ -1967,6 +2017,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			if(BP)
 				if(BP.receive_damage(damage_amount, 0, wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, sharpness = sharpness))
 					H.update_damage_overlays()
+					if(damage_amount < 20)
+						H.adjust_arousal(damage_amount, maso = TRUE)
 
 			else//no bodypart, we deal damage with a more general method.
 				H.adjustBruteLoss(damage_amount)

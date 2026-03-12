@@ -30,3 +30,17 @@
 	ckeywhitelist = list ("ExoticJazz")
 	cost = 0
 */
+
+/datum/gear/donator/debug_thing
+	name = "Debug Bingus"
+	slot = SLOT_IN_BACKPACK
+	path = /obj/item/autosurgeon/penis
+	ckeywhitelist = list("Super lAGG")
+	cost = 1
+
+/datum/gear/donator/debug_thing_2
+	name = "Debingus Bungus"
+	slot = SLOT_IN_BACKPACK
+	path = /obj/item/autosurgeon/penis
+	ckeywhitelist = list("superlagg")
+	cost = 1
