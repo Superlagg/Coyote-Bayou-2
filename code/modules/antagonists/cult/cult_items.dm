@@ -348,9 +348,10 @@
 	icon_state = "magus"
 	item_state = "magus"
 	desc = "A helm worn by the followers of Nar'Sie."
-	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDEEARS|HIDEEYES
+	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDEEARS|HIDEEYES|HIDESNOUT
 	armor = ARMOR_VALUE_MEDIUM
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
+	mutantrace_variation = STYLE_MUZZLE
 
 /obj/item/clothing/suit/magusred
 	name = "magus robes"

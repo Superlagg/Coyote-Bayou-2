@@ -5,7 +5,7 @@
 	item_state = "w_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = TRUE
-	mutantrace_variation = STYLE_DIGITIGRADE
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/under/sweater/black
 	name = "black sweater"

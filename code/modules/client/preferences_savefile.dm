@@ -195,6 +195,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["end_of_round_deathmatch"] >> end_of_round_deathmatch
 	READ_FILE(S["matchmaking_prefs"], matchmaking_prefs)
 	S["autostand"]			>> autostand
+	S["cit_toggles"]		>> cit_toggles
 	S["preferred_chaos"]	>> preferred_chaos
 	S["auto_ooc"]			>> auto_ooc
 	S["no_tetris_storage"]		>> no_tetris_storage
@@ -246,6 +247,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	widescreenpref		= sanitize_integer(widescreenpref, 0, 1, initial(widescreenpref))
 	end_of_round_deathmatch = sanitize_integer(end_of_round_deathmatch, FALSE, TRUE, initial(end_of_round_deathmatch))
 	autostand			= sanitize_integer(autostand, 0, 1, initial(autostand))
+	cit_toggles			= sanitize_integer(cit_toggles, 0, 16777215, initial(cit_toggles))
 	auto_ooc			= sanitize_integer(auto_ooc, 0, 1, initial(auto_ooc))
 	no_tetris_storage		= sanitize_integer(no_tetris_storage, 0, 1, initial(no_tetris_storage))
 	key_bindings 			= sanitize_islist(key_bindings, list())
@@ -355,6 +357,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["widescreenpref"], widescreenpref)
 	WRITE_FILE(S["end_of_round_deathmatch"], end_of_round_deathmatch)
 	WRITE_FILE(S["autostand"], autostand)
+	WRITE_FILE(S["cit_toggles"], cit_toggles)
 	WRITE_FILE(S["preferred_chaos"], preferred_chaos)
 	WRITE_FILE(S["auto_ooc"], auto_ooc)
 	WRITE_FILE(S["no_tetris_storage"], no_tetris_storage)
@@ -653,34 +656,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		var/list/L = CONFIG_GET(keyed_list/safe_visibility_toggles)
 		safe_visibilities = L.Copy()
 
-	features["breasts_size"]		= sanitize_inlist(features["breasts_size"], B_sizes, BREASTS_SIZE_DEF)
-	features["cock_size"]			= sanitize_integer(features["cock_size"], min_D, max_D, COCK_SIZE_DEF)
-	features["butt_size"] 			= sanitize_integer(features["butt_size"], min_B, max_B, BUTT_SIZE_DEF)
-	features["belly_size"] 			= sanitize_integer(features["belly_size"], min_O, max_O, BELLY_SIZE_DEF)
-	features["breasts_shape"]		= sanitize_inlist(features["breasts_shape"], GLOB.breasts_shapes_list, DEF_BREASTS_SHAPE)
-	features["belly_shape"]			= sanitize_inlist(features["belly_shape"], GLOB.belly_shapes_list, DEF_BELLY_SHAPE)
-	features["cock_shape"]			= sanitize_inlist(features["cock_shape"], GLOB.cock_shapes_list, DEF_COCK_SHAPE)
-	features["balls_shape"]			= sanitize_inlist(features["balls_shape"], GLOB.balls_shapes_list, DEF_BALLS_SHAPE)
-	features["vag_shape"]			= sanitize_inlist(features["vag_shape"], GLOB.vagina_shapes_list, DEF_VAGINA_SHAPE)
-	features["butt_color"]			= sanitize_hexcolor(features["butt_color"], 6, FALSE, "FFFFFF")
-	features["belly_color"]			= sanitize_hexcolor(features["belly_color"], 6, FALSE, "FFFFFF")
-	features["breasts_color"]		= sanitize_hexcolor(features["breasts_color"], 6, FALSE, "FFFFFF")
-	features["cock_color"]			= sanitize_hexcolor(features["cock_color"], 6, FALSE, "FFFFFF")
-	features["balls_color"]			= sanitize_hexcolor(features["balls_color"], 6, FALSE, "FFFFFF")
-	features["vag_color"]			= sanitize_hexcolor(features["vag_color"], 6, FALSE, "FFFFFF")
-	features["butt_visibility"] 	= sanitize_inlist(features["butt_visibility"], safe_visibilities, GEN_VISIBLE_NO_UNDIES)
-	features["belly_visibility"]	= sanitize_inlist(features["breasts_visibility"], safe_visibilities, GEN_VISIBLE_NO_UNDIES)
-	features["breasts_visibility"]	= sanitize_inlist(features["breasts_visibility"], safe_visibilities, GEN_VISIBLE_NO_UNDIES)
-	features["cock_visibility"]		= sanitize_inlist(features["cock_visibility"], safe_visibilities, GEN_VISIBLE_NO_UNDIES)
-	features["balls_visibility"]	= sanitize_inlist(features["balls_visibility"], safe_visibilities, GEN_VISIBLE_NO_UNDIES)
-	features["vag_visibility"]		= sanitize_inlist(features["vag_visibility"], safe_visibilities, GEN_VISIBLE_NO_UNDIES)
-	features["butt_visibility_flags"] 		= sanitize_integer(features["butt_visibility_flags"], GENITAL_FLAGS_MIN, GENITAL_FLAGS_MAX, GEN_VIS_FLAG_DEFAULT)
-	features["belly_visibility_flags"]		= sanitize_integer(features["breasts_visibility_flags"], GENITAL_FLAGS_MIN, GENITAL_FLAGS_MAX, GEN_VIS_FLAG_DEFAULT)
-	features["breasts_visibility_flags"]	= sanitize_integer(features["breasts_visibility_flags"], GENITAL_FLAGS_MIN, GENITAL_FLAGS_MAX, GEN_VIS_FLAG_DEFAULT)
-	features["cock_visibility_flags"]		= sanitize_integer(features["cock_visibility_flags"], GENITAL_FLAGS_MIN, GENITAL_FLAGS_MAX, GEN_VIS_FLAG_DEFAULT)
-	features["balls_visibility_flags"]		= sanitize_integer(features["balls_visibility_flags"], GENITAL_FLAGS_MIN, GENITAL_FLAGS_MAX, GEN_VIS_FLAG_DEFAULT)
-	features["vag_visibility_flags"]		= sanitize_integer(features["vag_visibility_flags"], GENITAL_FLAGS_MIN, GENITAL_FLAGS_MAX, GEN_VIS_FLAG_DEFAULT)
-	features["genital_visibility_flags"]	= sanitize_integer(features["genital_visibility_flags"], GENITAL_FLAGS_MIN, GENITAL_FLAGS_MAX, GEN_VIS_OVERALL_FLAG_DEFAULT)
 
 	custom_speech_verb				= sanitize_inlist(custom_speech_verb, GLOB.speech_verbs, "default")
 	custom_tongue					= sanitize_inlist(custom_tongue, GLOB.roundstart_tongues, "default")
@@ -688,6 +663,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	security_records				= copytext(security_records, 1, MAX_FLAVOR_LEN)
 	medical_records					= copytext(medical_records, 1, MAX_FLAVOR_LEN)
 
+	features["genital_order"]		= sanitize_text(features["genital_order"], DEF_COCKSTRING)
+	features["genital_hide"]		= sanitize_integer(features["genital_hide"], 0, 4096, 0)
+	features["genital_whitelist"]	= copytext(features["genital_whitelist"], 1, MAX_MESSAGE_LEN)
 	features["taste"]				= copytext(features["taste"], 1, MAX_TASTE_LEN)
 	features["flavor_text"]			= copytext(features["flavor_text"], 1, MAX_FLAVOR_LEN)
 	features["silicon_flavor_text"]	= copytext(features["silicon_flavor_text"], 1, MAX_FLAVOR_LEN)

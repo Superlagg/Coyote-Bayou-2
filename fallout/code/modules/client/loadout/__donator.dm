@@ -64,6 +64,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	gas_transfer_coefficient = 0.9
 	equip_delay_other = 20
+	mutantrace_variation = STYLE_MUZZLE
 
 /obj/item/card/id/dogtag/darknova
 	name = "holo dogtag"

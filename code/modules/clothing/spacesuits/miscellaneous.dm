@@ -244,7 +244,7 @@ Contains:
 	item_state = "ert_command-alert"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/alert
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	mutantrace_variation = STYLE_DIGITIGRADE
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_SNEK_TAURIC
 
 	//ERT Security
 /obj/item/clothing/head/helmet/space/hardsuit/ert/alert/sec

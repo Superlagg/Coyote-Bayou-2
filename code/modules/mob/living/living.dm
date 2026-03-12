@@ -1426,7 +1426,7 @@
 	return ..() && CHECK_MOBILITY(src, MOBILITY_MOVE)
 
 /mob/living/proc/set_gender(ngender = NEUTER, silent = FALSE, update_icon = TRUE, forced = FALSE)
-	if(forced)
+	if(forced || (!ckey || client?.prefs.cit_toggles & (ngender == FEMALE ? FORCED_FEM : FORCED_MASC)))
 		gender = ngender
 		return TRUE
 	return FALSE

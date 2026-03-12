@@ -289,6 +289,51 @@
 		return
 	H.grant_language(/datum/language/common)
 
+/datum/quirk/tribespeak
+	name = "Tribal Language Comprehension"
+	desc = "You're somehow capable of understanding and speaking the common tribal languages in the area."
+	value = 0
+	gain_text = span_notice("You remember the old ways of your tribe..")
+	lose_text = span_notice("You've forgotten the ways of your ancestors..")
+
+
+/datum/quirk/tribespeak/add()
+	var/mob/living/carbon/human/H = quirk_holder
+	H.grant_language(/datum/language/tribal)
+
+/datum/quirk/tribespeak/remove()
+	var/mob/living/carbon/human/H = quirk_holder
+	if(!QDELETED(H))
+		H.remove_language(/datum/language/tribal)
+
+/datum/quirk/in_heat
+	name = "ERP Receptive"
+	desc = "Your character, for whatever reason, is PASSIVELY seeking out attention from those who match your OOC Prefences. Remember to set your OOC notes!"
+	value = 0
+	mob_trait = TRAIT_IN_HEAT
+
+
+/datum/quirk/heat
+	name = "ERP Seeking"
+	desc = "Your character, for whatever reason, is ACTIVELY seeking out attention from those who match your OOC Preferences. Remember to check peoples OOC notes!"
+	value = 0
+	mob_trait = TRAIT_HEAT_DETECT
+
+/datum/quirk/smol
+	name = "Smol!"
+	desc = "Maybe you're really smol, maybe you're just really light, maybe you're *really* into yoga. However it is, others can Alt-Click to pick you up like an item!"
+	value = 0
+	mob_trait = TRAIT_SMOL
+	gain_text = span_notice("You feel scoopable! Others can ALT-CLICK you to pick you up!")
+	lose_text = span_notice("You feel a lot less scoopable.")
+
+/datum/quirk/smol/add()
+	if(istype(quirk_holder))
+		quirk_holder.AddElement(/datum/element/mob_holder, "corgi") // dog
+
+/datum/quirk/smol/remove()
+	if(istype(quirk_holder))
+		quirk_holder.RemoveElement(/datum/element/mob_holder) // undog
 /*
 /datum/quirk/cat
 	name = "A cat!"
