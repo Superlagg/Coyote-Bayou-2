@@ -22,6 +22,11 @@
 	else
 		gulp_size = max(round(reagents.total_volume / 5), 5)
 
+/obj/item/reagent_containers/food/drinks/take_a_bellybite(datum/source, obj/vore_belly/gut, mob/living/vorer)
+	INVOKE_ASYNC(src, .proc/attempt_forcedrink, vorer, vorer, TRUE, TRUE, TRUE)
+	if(gut.can_taste)
+		checkLiked(min(gulp_size/reagents.total_volume, 1), vorer)
+	return TRUE
 
 /obj/item/reagent_containers/food/drinks/attack(mob/living/M, mob/user, def_zone)
 	INVOKE_ASYNC(src, PROC_REF(attempt_forcedrink), M, user)
@@ -607,6 +612,15 @@
 	ENABLE_BITFIELD(reagents.reagents_holder_flags, OPENCONTAINER)
 	spillable = TRUE
 	return
+
+/obj/item/reagent_containers/food/drinks/soda_cans/take_a_bellybite(datum/source, obj/vore_belly/gut, mob/living/vorer)
+	if(!is_drainable())
+		INVOKE_ASYNC(src, .proc/pop_top, vorer, vorer, TRUE, TRUE, TRUE)
+		return TRUE
+	if(!reagents.total_volume)
+		INVOKE_ASYNC(src, .proc/crush_can, vorer, vorer, TRUE, TRUE, TRUE)
+		return TRUE
+	return ..()
 
 /obj/item/reagent_containers/food/drinks/soda_cans/cola
 	name = "Space Cola"
