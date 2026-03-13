@@ -31,7 +31,6 @@
 #define GENITAL_HUD		"25"
 #define TAIL_HUD		"26"
 
-#define GENITAL_PORNHUD		"27" // TODO: murderfuck this
 
 //by default everything in the hud_list of an atom is an image
 //a value in hud_list with one of these will change that behavior
@@ -69,6 +68,9 @@
 #define ANTAG_HUD_HERETIC	26
 
 #define DATA_HUD_CLIENT			27 //data hud new
+
+#define GENITAL_PORNHUD			28
+#define TAIL_HUD_DATUM			29
 
 // Notification action types
 #define NOTIFY_JUMP "jump"

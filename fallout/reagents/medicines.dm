@@ -40,18 +40,6 @@
 
 // Overdose makes you barflock yourself
 /datum/reagent/medicine/stimpak/overdose_process(mob/living/carbon/M)
-	. = ..()
-	M.adjustToxLoss(damage_offset * 0.5 * REAGENTS_EFFECT_MULTIPLIER, FALSE)	//50% of damage_offset (1.5)
-	if(M.jitteriness + 15 <= 300)
-		M.jitteriness += 15
-	if(M.disgust + 2.5 <= DISGUST_LEVEL_DISGUSTED + 10)
-		M.disgust += 2.5
-	if(M.dizziness + 0.75 <= 15)
-		M.dizziness += 0.75
-	if(M.confused + 0.5 <= 10)
-		M.confused += 0.5
-	M.hallucination = 15
-	M.druggy = 15
 	if(M.disgust < 80)
 		M.adjust_disgust(10)
 	..()
@@ -152,43 +140,7 @@
 /datum/reagent/medicine/super_stimpak/on_mob_life(mob/living/carbon/M)
 
 	. = ..()
-	var/is_blocked = FALSE
-	if(!is_blocked)
-		//Clotting properties for pierce/slash wounds
-		if(current_cycle > 0 && current_cycle % 6 == 0 && M.all_wounds && M.all_wounds.len >= 1)	//Every 6th cycle, reduce blood_flow for all pierce/slash wounds by clot_rate.
-			for(var/datum/wound/iter_wound in M.all_wounds)
-				var/affected_limb_name = iter_wound.limb.name
-				switch(iter_wound.severity)
-					if (WOUND_SEVERITY_CRITICAL)
-						if (iter_wound.wound_type == WOUND_PIERCE)
-							iter_wound.blood_flow -= clot_rate
-							M.visible_message("<span class='notice'>The bleeding hole in [M]'s [affected_limb_name] fills with fresh tissue!</span>", \
-											  "<span class='notice'>You feel the cavity in your [affected_limb_name] weaving back together.</span>")
-						else if (iter_wound.wound_type == WOUND_SLASH)
-							iter_wound.blood_flow -= clot_rate
-							M.visible_message("<span class='notice'>The deep gashes on [M]'s [affected_limb_name] close up!</span>", \
-											  "<span class='notice'>You feel the deep gashes on your [affected_limb_name] close up.</span>")
-					if (WOUND_SEVERITY_SEVERE)
-						if (iter_wound.wound_type == WOUND_PIERCE)
-							iter_wound.blood_flow -= clot_rate
-							M.visible_message("<span class='notice'>The puncture wound on [M]'s [affected_limb_name] shrinks!</span>", \
-											  "<span class='notice'>You feel the puncture wound on your [affected_limb_name] shrinking.</span>")
-						else if (iter_wound.wound_type == WOUND_SLASH)
-							iter_wound.blood_flow -= clot_rate
-							M.visible_message("<span class='notice'>The large cuts on [M]'s [affected_limb_name] mend!</span>", \
-											  "<span class='notice'>You feel the large cuts on your [affected_limb_name] mending.</span>")
-					if (WOUND_SEVERITY_MODERATE)
-						if (iter_wound.wound_type == WOUND_PIERCE || iter_wound.wound_type == WOUND_SLASH)
-							iter_wound.blood_flow -= clot_rate
-
-		//Actual healing part starts here
-		M.adjustBruteLoss(-damage_offset * 1.7 * REAGENTS_EFFECT_MULTIPLIER, FALSE)	
-		M.adjustFireLoss(-damage_offset * 1.7 * REAGENTS_EFFECT_MULTIPLIER, FALSE)	
-		M.AdjustStun(-damage_offset * 0.90 * REAGENTS_EFFECT_MULTIPLIER, FALSE)	
-		M.AdjustKnockdown(-damage_offset * 0.90 * REAGENTS_EFFECT_MULTIPLIER, FALSE)	
-		M.adjustStaminaLoss(-damage_offset * 0.90 * REAGENTS_EFFECT_MULTIPLIER, FALSE)	
-		M.heal_bodypart_damage(damage_offset, damage_offset * 3, only_robotic = TRUE, only_organic = FALSE)	
-		. = TRUE
+	. = TRUE
 
 // ---------------------------
 // LONGPORK STEW REAGENT
