@@ -186,6 +186,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		"flavor_text" = "",
 		"silicon_flavor_text" = "",
 		"ooc_notes" = "",
+		"meat_type" = "Mammalian",
+		"taste" = "something",
 		"body_model" = MALE,
 		"body_size" = RESIZE_DEFAULT_SIZE,
 		"color_scheme" = OLD_CHARACTER_COLORING,
@@ -533,6 +535,26 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				dat += "<a style='display:block;width:100px' href='?_src_=prefs;preference=s_tone;task=input'>[use_custom_skin_tone ? "custom: <span style='border:1px solid #161616; background-color: [skin_tone];'>&nbsp;&nbsp;&nbsp;</span>" : skin_tone]</a><BR>"
 
+			var/mutant_colors
+			if((MUTCOLORS in pref_species.species_traits) || (MUTCOLORS_PARTSONLY in pref_species.species_traits))
+				if(!use_skintones)
+					dat += APPEARANCE_CATEGORY_COLUMN
+
+				dat += "<h3>Advanced Coloring</h3>"
+				dat += "</b><a style='display:block;width:100px' href='?_src_=prefs;preference=color_scheme;task=input'>[(features["color_scheme"] == ADVANCED_CHARACTER_COLORING) ? "Enabled" : "Disabled"]</a>"
+
+				dat += "<h2>Body Colors</h2>"
+
+				dat += "<b>Primary Color:</b><BR>"
+				dat += "<span style='border: 1px solid #161616; background-color: #[features["mcolor"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=mutant_color;task=input'>Change</a><BR>"
+
+				dat += "<b>Secondary Color:</b><BR>"
+				dat += "<span style='border: 1px solid #161616; background-color: #[features["mcolor2"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=mutant_color2;task=input'>Change</a><BR>"
+
+				dat += "<b>Tertiary Color:</b><BR>"
+				dat += "<span style='border: 1px solid #161616; background-color: #[features["mcolor3"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=mutant_color3;task=input'>Change</a><BR>"
+				mutant_colors = TRUE
+
 			if (CONFIG_GET(number/body_size_min) != CONFIG_GET(number/body_size_max))
 				dat += "<b>Sprite Size:</b> <a href='?_src_=prefs;preference=body_size;task=input'>[features["body_size"]*100]%</a><br>"
 
@@ -583,6 +605,143 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				dat += "</td>"
 
+			//Mutant stuff
+			var/mutant_category = 0
+
+			dat += APPEARANCE_CATEGORY_COLUMN
+			dat += "<h3>Show mismatched markings</h3>"
+			dat += "<a style='display:block;width:100px' href='?_src_=prefs;preference=mismatched_markings;task=input'>[show_mismatched_markings ? "Yes" : "No"]</a>"
+			mutant_category++
+			if(mutant_category >= MAX_MUTANT_ROWS) //just in case someone sets the max rows to 1 or something dumb like that
+				dat += "</td>"
+				mutant_category = 0
+
+			// rp marking selection
+			// assume you can only have mam markings or regular markings or none, never both
+			var/marking_type
+			if(parent.can_have_part("mam_body_markings"))
+				marking_type = "mam_body_markings"
+			if(marking_type)
+				dat += APPEARANCE_CATEGORY_COLUMN
+				dat += "<h3>[GLOB.all_mutant_parts[marking_type]]</h3>" // give it the appropriate title for the type of marking
+				dat += "<a href='?_src_=prefs;preference=marking_add;marking_type=[marking_type];task=input'>Add marking</a>"
+				// list out the current markings you have
+				if(length(features[marking_type]))
+					dat += "<table>"
+					var/list/markings = features[marking_type]
+					if(!islist(markings))
+						// something went terribly wrong
+						markings = list()
+					var/list/reverse_markings = reverseList(markings)
+					for(var/list/marking_list in reverse_markings)
+						var/marking_index = markings.Find(marking_list) // consider changing loop to go through indexes over lists instead of using Find here
+						var/limb_value = marking_list[1]
+						var/actual_name = GLOB.bodypart_names[num2text(limb_value)] // get the actual name from the bitflag representing the part the marking is applied to
+						var/color_marking_dat = ""
+						var/number_colors = 1
+						var/datum/sprite_accessory/mam_body_markings/S = GLOB.mam_body_markings_list[marking_list[2]]
+						var/matrixed_sections = S.covered_limbs[actual_name]
+						if(S && matrixed_sections)
+							// if it has nothing initialize it to white
+							if(length(marking_list) == 2)
+								var/first = "#FFFFFF"
+								var/second = "#FFFFFF"
+								var/third = "#FFFFFF"
+								if(features["mcolor"])
+									first = "#[features["mcolor"]]"
+								if(features["mcolor2"])
+									second = "#[features["mcolor2"]]"
+								if(features["mcolor3"])
+									third = "#[features["mcolor3"]]"
+								marking_list += list(list(first, second, third)) // just assume its 3 colours if it isnt it doesnt matter we just wont use the other values
+							// index magic
+							var/primary_index = 1
+							var/secondary_index = 2
+							var/tertiary_index = 3
+							switch(matrixed_sections)
+								if(MATRIX_GREEN)
+									primary_index = 2
+								if(MATRIX_BLUE)
+									primary_index = 3
+								if(MATRIX_RED_BLUE)
+									secondary_index = 2
+								if(MATRIX_GREEN_BLUE)
+									primary_index = 2
+									secondary_index = 3
+
+							// we know it has one matrixed section at minimum
+							color_marking_dat += "<span style='border: 1px solid #161616; background-color: [marking_list[3][primary_index]];'>&nbsp;&nbsp;&nbsp;</span>"
+							// if it has a second section, add it
+							if(matrixed_sections == MATRIX_RED_BLUE || matrixed_sections == MATRIX_GREEN_BLUE || matrixed_sections == MATRIX_RED_GREEN || matrixed_sections == MATRIX_ALL)
+								color_marking_dat += "<span style='border: 1px solid #161616; background-color: [marking_list[3][secondary_index]];'>&nbsp;&nbsp;&nbsp;</span>"
+								number_colors = 2
+							// if it has a third section, add it
+							if(matrixed_sections == MATRIX_ALL)
+								color_marking_dat += "<span style='border: 1px solid #161616; background-color: [marking_list[3][tertiary_index]];'>&nbsp;&nbsp;&nbsp;</span>"
+								number_colors = 3
+							color_marking_dat += " <a href='?_src_=prefs;preference=marking_color;marking_index=[marking_index];marking_type=[marking_type];number_colors=[number_colors];task=input'>Change</a><BR>"
+						dat += "<tr><td>[marking_list[2]] - [actual_name]</td> <td><a href='?_src_=prefs;preference=marking_down;task=input;marking_index=[marking_index];marking_type=[marking_type];'>&#708;</a> <a href='?_src_=prefs;preference=marking_up;task=input;marking_index=[marking_index];marking_type=[marking_type]'>&#709;</a> <a href='?_src_=prefs;preference=marking_remove;task=input;marking_index=[marking_index];marking_type=[marking_type]'>X</a> [color_marking_dat]</td></tr>"
+					dat += "</table>"
+
+			for(var/mutant_part in GLOB.all_mutant_parts)
+				if(mutant_part == "mam_body_markings")
+					continue
+				if(parent.can_have_part(mutant_part))
+					if(!mutant_category)
+						dat += APPEARANCE_CATEGORY_COLUMN
+					dat += "<h3>[GLOB.all_mutant_parts[mutant_part]]</h3>"
+					dat += "<a style='display:block;width:100px' href='?_src_=prefs;preference=[mutant_part];task=input'>[features[mutant_part]]</a>"
+					var/color_type = GLOB.colored_mutant_parts[mutant_part] //if it can be coloured, show the appropriate button
+					if(color_type)
+						dat += "<span style='border:1px solid #161616; background-color: #[features[color_type]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=[color_type];task=input'>Change</a><BR>"
+					else
+						if(features["color_scheme"] == ADVANCED_CHARACTER_COLORING) //advanced individual part colouring system
+							//is it matrixed or does it have extra parts to be coloured?
+							var/find_part = features[mutant_part] || pref_species.mutant_bodyparts[mutant_part]
+							var/find_part_list = GLOB.mutant_reference_list[mutant_part]
+							if(find_part && find_part != "None" && find_part_list)
+								var/datum/sprite_accessory/accessory = find_part_list[find_part]
+								if(accessory)
+									if(accessory.color_src == MATRIXED || accessory.color_src == MUTCOLORS || accessory.color_src == MUTCOLORS2 || accessory.color_src == MUTCOLORS3) //mutcolors1-3 are deprecated now, please don't rely on these in the future
+										var/mutant_string = accessory.mutant_part_string
+										var/primary_feature = "[mutant_string]_primary"
+										var/secondary_feature = "[mutant_string]_secondary"
+										var/tertiary_feature = "[mutant_string]_tertiary"
+										if(!features[primary_feature])
+											features[primary_feature] = features["mcolor"]
+										if(!features[secondary_feature])
+											features[secondary_feature] = features["mcolor2"]
+										if(!features[tertiary_feature])
+											features[tertiary_feature] = features["mcolor3"]
+
+										var/matrixed_sections = accessory.matrixed_sections
+										if(accessory.color_src == MATRIXED && !matrixed_sections)
+											message_admins("Sprite Accessory Failure (customization): Accessory [accessory.type] is a matrixed item without any matrixed sections set!")
+											continue
+										else if(accessory.color_src == MATRIXED)
+											switch(matrixed_sections)
+												if(MATRIX_GREEN) //only composed of a green section
+													primary_feature = secondary_feature //swap primary for secondary, so it properly assigns the second colour, reserved for the green section
+												if(MATRIX_BLUE)
+													primary_feature = tertiary_feature //same as above, but the tertiary feature is for the blue section
+												if(MATRIX_RED_BLUE) //composed of a red and blue section
+													secondary_feature = tertiary_feature //swap secondary for tertiary, as blue should always be tertiary
+												if(MATRIX_GREEN_BLUE) //composed of a green and blue section
+													primary_feature = secondary_feature //swap primary for secondary, as first option is green, which is linked to the secondary
+													secondary_feature = tertiary_feature //swap secondary for tertiary, as second option is blue, which is linked to the tertiary
+										dat += "<b>Primary Color</b><BR>"
+										dat += "<span style='border:1px solid #161616; background-color: #[features[primary_feature]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=[primary_feature];task=input'>Change</a><BR>"
+										if((accessory.color_src == MATRIXED && (matrixed_sections == MATRIX_RED_BLUE || matrixed_sections == MATRIX_GREEN_BLUE || matrixed_sections == MATRIX_RED_GREEN || matrixed_sections == MATRIX_ALL)) || (accessory.extra && (accessory.extra_color_src == MUTCOLORS || accessory.extra_color_src == MUTCOLORS2 || accessory.extra_color_src == MUTCOLORS3)))
+											dat += "<b>Secondary Color</b><BR>"
+											dat += "<span style='border:1px solid #161616; background-color: #[features[secondary_feature]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=[secondary_feature];task=input'>Change</a><BR>"
+											if((accessory.color_src == MATRIXED && matrixed_sections == MATRIX_ALL) || (accessory.extra2 && (accessory.extra2_color_src == MUTCOLORS || accessory.extra2_color_src == MUTCOLORS2 || accessory.extra2_color_src == MUTCOLORS3)))
+												dat += "<b>Tertiary Color</b><BR>"
+												dat += "<span style='border:1px solid #161616; background-color: #[features[tertiary_feature]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=[tertiary_feature];task=input'>Change</a><BR>"
+
+					mutant_category++
+					if(mutant_category >= MAX_MUTANT_ROWS)
+						dat += "</td>"
+						mutant_category = 0
 
 			if(length(pref_species.allowed_limb_ids))
 				if(!chosen_limb_id || !(chosen_limb_id in pref_species.allowed_limb_ids))
