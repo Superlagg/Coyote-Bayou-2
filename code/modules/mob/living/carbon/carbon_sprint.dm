@@ -19,7 +19,7 @@
 		if(HAS_TRAIT(src, TRAIT_ZOOMIES))
 			sprint_buffer -= use * 0.5
 		else
-			sprint_buffer -= (use * special_discount)
+			sprint_buffer -= (use)
 		tiles -= use
 		update_hud_sprint_bar()
 	
@@ -38,7 +38,7 @@
 	if(HAS_TRAIT(src, TRAIT_SUPER_ZOOMIES))
 		return
 	else
-		adjustStaminaLoss(tiles * sprint_stamina_cost * stamina_modifier)
+		adjustStaminaLoss(tiles * sprint_stamina_cost)
 	
 	// Auto-disable sprint if we hit soft stamcrit (same as combat system)
 	if(combat_flags & COMBAT_FLAG_SOFT_STAMCRIT)
