@@ -16,6 +16,28 @@ GLOBAL_LIST_EMPTY(undershirt_m)	 //stores only undershirt name
 GLOBAL_LIST_EMPTY(undershirt_f)	 //stores only undershirt name
 	//Socks
 GLOBAL_LIST_EMPTY_TYPED(socks_list, /datum/sprite_accessory/underwear/socks)		//stores socks indexed by name
+	//Lizard Bits (all datum lists indexed by name)
+GLOBAL_LIST_EMPTY(tails_list_lizard)
+GLOBAL_LIST_EMPTY(animated_tails_list_lizard)
+GLOBAL_LIST_EMPTY(snouts_list)
+GLOBAL_LIST_EMPTY(horns_list)
+GLOBAL_LIST_EMPTY(frills_list)
+GLOBAL_LIST_EMPTY(spines_list)
+GLOBAL_LIST_EMPTY(legs_list)
+GLOBAL_LIST_EMPTY(animated_spines_list)
+
+	//Mutant Human bits
+GLOBAL_LIST_EMPTY(tails_list_human)
+GLOBAL_LIST_EMPTY(animated_tails_list_human)
+GLOBAL_LIST_EMPTY(ears_list)
+GLOBAL_LIST_EMPTY(wings_list)
+GLOBAL_LIST_EMPTY(wings_open_list)
+GLOBAL_LIST_EMPTY(deco_wings_list)
+GLOBAL_LIST_EMPTY(r_wings_list)
+GLOBAL_LIST_EMPTY(insect_wings_list)
+GLOBAL_LIST_EMPTY(insect_fluffs_list)
+GLOBAL_LIST_EMPTY(insect_markings_list)
+GLOBAL_LIST_EMPTY(caps_list)
 
 //a way to index the right bodypart list given the type of bodypart
 GLOBAL_LIST_INIT(mutant_reference_list, list(
@@ -346,7 +368,7 @@ GLOBAL_LIST_INIT(greyscale_limb_types, list("human","moth","lizard","pod","plant
 GLOBAL_LIST_INIT(prosthetic_limb_types, list("xion","bishop","cybersolutions","grayson","hephaestus","nanotrasen","talon"))
 
 //body ids that have non-gendered bodyparts
-GLOBAL_LIST_INIT(nongendered_limb_types, list("zombie" ,"synth", "shadow", "cultgolem", "agent", "smutant"))
+GLOBAL_LIST_INIT(nongendered_limb_types, list("fly", "zombie" ,"synth", "shadow", "cultgolem", "agent", "plasmaman", "clockgolem", "clothgolem", "smutant"))
 
 //list of eye types, corresponding to a respective left and right icon state for the set of eyes
 GLOBAL_LIST_INIT(eye_types, list("normal", "anime", "wide", "derpy", "insect", "moth", "double", "double2", "double3", "cyclops", "shadekin"))
