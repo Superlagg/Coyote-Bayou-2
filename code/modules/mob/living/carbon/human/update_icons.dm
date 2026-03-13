@@ -73,7 +73,7 @@ There are several things that need to be remembered:
 	dna.species.handle_mutant_bodyparts(src)
 
 
-/mob/living/carbon/human/update_body()
+/mob/living/carbon/human/update_body(update_genitals = TRUE)
 	if(!dna || !dna.species)
 		return
 	remove_overlay(BODY_LAYER)
