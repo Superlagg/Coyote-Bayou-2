@@ -431,7 +431,6 @@
 	grind_results = list(/datum/reagent/medicine/styptic_powder = 10, /datum/reagent/medicine/silver_sulfadiazine = 10)
 	merge_type = /obj/item/stack/medical/bruise_pack
 
-/*
 /obj/item/stack/medical/bruise_pack/lick
 	name = "healing saliva"
 	singular_name = "healing saliva"
@@ -464,7 +463,6 @@
 			user.visible_message(
 				span_green("[user] lick [target]'s [target_part]!"),
 				span_green("You lick [user == target ? "your" : "[target]'s"] [target_part]!"))
-*/
 
 /obj/item/stack/medical/bruise_pack/one
 	amount = 1
@@ -600,7 +598,6 @@
 	merge_type = /obj/item/stack/medical/gauze/cyborg
 
 /// ...
-/*
 /obj/item/stack/medical/gauze/lick
 	name = "coagulating saliva"
 	desc = "A fresh coating of somehow medicinal saliva, good for slowing the blood flow on a wound. Not the best of treatments, but somehow better than nothing."
@@ -626,7 +623,6 @@
 	custom_price = PRICE_REALLY_CHEAP
 	grind_results = null
 	merge_type = /obj/item/stack/medical/gauze/lick
-*/
 
 /* * * * * *
  * SUTURES

@@ -677,7 +677,6 @@ GLOBAL_LIST_INIT(bone_dancer_recipes, list(
 		H.mind.learned_recipes -= GLOB.basic_explosive_recipes
 		H.mind.learned_recipes -= GLOB.adv_explosive_recipes
 
-/*
 /datum/quirk/lick_heal
 	name = "Soothing Saliva"
 	desc = "Your saliva has a mild healing effect on burns and bruises. Use *lick to lick your injuries."
@@ -727,7 +726,6 @@ GLOBAL_LIST_INIT(bone_dancer_recipes, list(
 	if(!our_tongue)
 		return //welp
 	QDEL_NULL(our_tongue.lick_bandage)
-*/
 
 // This does the same thing as basic explosive crafting by giving basic_recipe and adv_recipe. -Possum
 /*
