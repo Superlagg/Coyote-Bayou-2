@@ -347,6 +347,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	dat += "<a href='?_src_=prefs;preference=tab;tab=[SETTINGS_TAB]' [current_tab == SETTINGS_TAB ? "class='linkOn'" : ""]>Character Settings</a>"
 	dat += "<a href='?_src_=prefs;preference=tab;tab=[APPEARANCE_TAB]' [current_tab == APPEARANCE_TAB ? "class='linkOn'" : ""]>Character Appearance</a>"
+	dat += "<a href='?_src_=prefs;preference=tab;tab=[ERP_TAB]' [current_tab == ERP_TAB ? "class='linkOn'" : ""]>Underlying Appearance</a>"
 	dat += "<a href='?_src_=prefs;preference=tab;tab=[LOADOUT_TAB]' [current_tab == LOADOUT_TAB ? "class='linkOn'" : ""]>Loadout</a>"
 	dat += "<a href='?_src_=prefs;preference=tab;tab=[GAME_PREFERENCES_TAB]' [current_tab == GAME_PREFERENCES_TAB ? "class='linkOn'" : ""]>Game Preferences</a>"
 	dat += "<a href='?_src_=prefs;preference=tab;tab=[CONTENT_PREFERENCES_TAB]' [current_tab == CONTENT_PREFERENCES_TAB ? "class='linkOn'" : ""]>Content Preferences</a>"
@@ -523,6 +524,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					dat += "<b>[modification]: [modified_limbs[modification][1]]</b><BR>"
 			dat += "<BR>"
 			dat += "<b>Species:</b><a style='display:block;width:100px' href='?_src_=prefs;preference=species;task=input'>[pref_species.name]</a><BR>"
+			dat += "<b>Custom Species Name:</b><a style='display:block;width:100px' href='?_src_=prefs;preference=custom_species;task=input'>[custom_species ? custom_species : "None"]</a><BR>"
+			dat += "<b>Custom Taste:</b><a style='display:block;width:100px' href='?_src_=prefs;preference=taste;task=input'>[features["taste"] ? features["taste"] : "something"]</a><BR>"
 			dat += "<b>Runechat Color:</b><a style='display:block;width:100px' href='?_src_=prefs;preference=chat_color;task=input;background-color: #[features["chat_color"]]'>#[features["chat_color"]]</span></a><BR>"
 			dat += "<b>Random Body:</b><a style='display:block;width:100px' href='?_src_=prefs;preference=all;task=random'>Randomize!</A><BR>"
 			dat += "<b>Always Random Body:</b><a href='?_src_=prefs;preference=all'>[be_random_body ? "Yes" : "No"]</A><BR>"
@@ -562,7 +565,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "<h3>Eye Type</h3>"
 				dat += "</b><a style='display:block;width:100px' href='?_src_=prefs;preference=eye_type;task=input'>[eye_type]</a><BR>"
 				if((EYECOLOR in pref_species.species_traits))
-					if(!use_skintones)
+					if(!use_skintones && !mutant_colors)
 						dat += APPEARANCE_CATEGORY_COLUMN
 					if(left_eye_color != right_eye_color)
 						split_eye_colors = TRUE
@@ -578,8 +581,21 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						dat += "<h3>Right Eye Color</h3>"
 						dat += "<span style='border: 1px solid #161616; background-color: #[right_eye_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=eye_right;task=input'>Change</a><BR>"
 						dat += "</td>"
-				else if(use_skintones)
+				else if(use_skintones || mutant_colors)
 					dat += "</td>"
+
+			dat += APPEARANCE_CATEGORY_COLUMN
+			dat += "<h2>Speech preferences</h2>"
+			dat += "<b>Custom Speech Verb:</b><BR>"
+			dat += "</b><a style='display:block;width:100px' href='?_src_=prefs;preference=speech_verb;task=input'>[custom_speech_verb]</a><BR>"
+			dat += "<b>Custom Tongue:</b><BR>"
+			dat += "</b><a style='display:block;width:100px' href='?_src_=prefs;preference=tongue;task=input'>[custom_tongue]</a><BR>"
+
+			// Coyote ADD: Blurbleblurhs
+			dat += "<b>Sound Indicator:</b><BR>"
+			dat += "</b><a style='display:block;width:100px' href='?_src_=prefs;preference=typing_indicator_sound_play;task=input'>[features_speech["typing_indicator_sound_play"]]</a><BR>"
+			dat += "</b><a style='display:block;width:100px' href='?_src_=prefs;preference=typing_indicator_sound;task=input'>[features_speech["typing_indicator_sound"]]</a><BR>"
+			// Coyote ADD: End
 
 			if(HAIR in pref_species.species_traits)
 
@@ -749,6 +765,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "<h3>Body sprite</h3>"
 				dat += "<a style='display:block;width:100px' href='?_src_=prefs;preference=bodysprite;task=input'>[chosen_limb_id]</a>"
 
+			if(mutant_category)
+				dat += "</td>"
+				mutant_category = 0
+
 			dat += "</tr></table>"
 
 			dat += "</td>"
@@ -847,6 +867,86 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "</td>"
 			dat += "</tr></table>"*/
 
+			dat += "</tr></table>"
+			/*Uplink choice disabled since not implemented, pointless button
+			dat += "<b>Uplink Location:</b><a style='display:block;width:100px' href ='?_src_=prefs;preference=uplink_loc;task=input'>[uplink_spawn_loc]</a>"
+			dat += "</td>"*/
+
+			/// HA HA! I HAVE DELETED YOUR PRECIOUS NAUGHTY PARTS, YOU HORNY ANIMALS!
+			/* dat +="<td width='220px' height='300px' valign='top'>" //
+			if(NOGENITALS in pref_species.species_traits)
+				dat += "<b>Your species ([pref_species.name]) does not support genitals!</b><br>"
+			else
+				dat += "<h3>Penis</h3>"
+				dat += "<a style='display:block;width:50px' href='?_src_=prefs;preference=has_cock'>[features["has_cock"] == TRUE ? "Yes" : "No"]</a>"
+				if(features["has_cock"])
+					if(!pref_species.use_skintones)
+						dat += "<b>Penis Color:</b></a><BR>"
+						dat += "<span style='border: 1px solid #161616; background-color: #[features["cock_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=cock_color;task=input'>Change</a><br>"
+					var/tauric_shape = FALSE
+					if(features["cock_taur"])
+						var/datum/sprite_accessory/penis/P = GLOB.cock_shapes_list[features["cock_shape"]]
+						if(P.taur_icon && parent.can_have_part("taur"))
+							var/datum/sprite_accessory/taur/T = GLOB.taur_list[features["taur"]]
+							if(T.taur_mode & P.accepted_taurs)
+								tauric_shape = TRUE
+					dat += "<b>Penis Shape:</b> <a style='display:block;width:120px' href='?_src_=prefs;preference=cock_shape;task=input'>[features["cock_shape"]][tauric_shape ? " (Taur)" : ""]</a>"
+					dat += "<b>Penis Length:</b> <a style='display:block;width:120px' href='?_src_=prefs;preference=cock_length;task=input'>[features["cock_length"]] inch(es)</a>"
+					dat += "<b>Penis Visibility:</b><a style='display:block;width:100px' href='?_src_=prefs;preference=cock_visibility;task=input'>[features["cock_visibility"]]</a>"
+					dat += "<b>Has Testicles:</b><a style='display:block;width:50px' href='?_src_=prefs;preference=has_balls'>[features["has_balls"] == TRUE ? "Yes" : "No"]</a>"
+					if(features["has_balls"])
+						if(!pref_species.use_skintones)
+							dat += "<b>Testicles Type:</b> <a style='display:block;width:100px' href='?_src_=prefs;preference=balls_shape;task=input'>[features["balls_shape"]]</a>"
+							dat += "<b>Testicles Color:</b></a><BR>"
+							dat += "<span style='border: 1px solid #161616; background-color: #[features["balls_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=balls_color;task=input'>Change</a><br>"
+						dat += "<b>Testicles Visibility:</b><a style='display:block;width:100px' href='?_src_=prefs;preference=balls_visibility;task=input'>[features["balls_visibility"]]</a>"
+				dat += APPEARANCE_CATEGORY_COLUMN
+				dat += "<h3>Vagina</h3>"
+				dat += "<a style='display:block;width:50px' href='?_src_=prefs;preference=has_vag'>[features["has_vag"] == TRUE ? "Yes": "No" ]</a>"
+				if(features["has_vag"])
+					dat += "<b>Vagina Type:</b> <a style='display:block;width:100px' href='?_src_=prefs;preference=vag_shape;task=input'>[features["vag_shape"]]</a>"
+					if(!pref_species.use_skintones)
+						dat += "<b>Vagina Color:</b></a><BR>"
+						dat += "<span style='border: 1px solid #161616; background-color: #[features["vag_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=vag_color;task=input'>Change</a><br>"
+					dat += "<b>Vagina Visibility:</b><a style='display:block;width:100px' href='?_src_=prefs;preference=vag_visibility;task=input'>[features["vag_visibility"]]</a>"
+					dat += "<b>Has Womb:</b><a style='display:block;width:50px' href='?_src_=prefs;preference=has_womb'>[features["has_womb"] == TRUE ? "Yes" : "No"]</a>"
+				dat += "</td>"
+				dat += APPEARANCE_CATEGORY_COLUMN
+				dat += "<h3>Breasts</h3>"
+				dat += "<a style='display:block;width:50px' href='?_src_=prefs;preference=has_breasts'>[features["has_breasts"] == TRUE ? "Yes" : "No" ]</a>"
+				if(features["has_breasts"])
+					if(!pref_species.use_skintones)
+						dat += "<b>Color:</b></a><BR>"
+						dat += "<span style='border: 1px solid #161616; background-color: #[features["breasts_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=breasts_color;task=input'>Change</a><br>"
+					dat += "<b>Cup Size:</b><a style='display:block;width:50px' href='?_src_=prefs;preference=breasts_size;task=input'>[features["breasts_size"]]</a>"
+					dat += "<b>Breasts Shape:</b><a style='display:block;width:50px' href='?_src_=prefs;preference=breasts_shape;task=input'>[features["breasts_shape"]]</a>"
+					dat += "<b>Breasts Visibility:</b><a style='display:block;width:100px' href='?_src_=prefs;preference=breasts_visibility;task=input'>[features["breasts_visibility"]]</a>"
+					dat += "<b>Lactates:</b><a style='display:block;width:50px' href='?_src_=prefs;preference=breasts_producing'>[features["breasts_producing"] == TRUE ? "Yes" : "No"]</a>"
+				dat += "</td>"
+				dat += APPEARANCE_CATEGORY_COLUMN
+				dat += "<h3>Belly</h3>"
+				dat += "<a style='display:block;width:50px' href='?_src_=prefs;preference=has_belly'>[features["has_belly"] == TRUE ? "Yes" : "No" ]</a>"
+				if(features["has_belly"])
+					if(!pref_species.use_skintones)
+						dat += "<b>Color:</b></a><BR>"
+						dat += "<span style='border: 1px solid #161616; background-color: #[features["belly_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=belly_color;task=input'>Change</a><br>"
+					dat += "<b>Belly Size:</b><a style='display:block;width:50px' href='?_src_=prefs;preference=belly_size;task=input'>[features["belly_size"]]</a>"
+					dat += "<b>Belly Shape:</b><a style='display:block;width:50px' href='?_src_=prefs;preference=belly_shape;task=input'>[features["belly_shape"]]</a>"
+					dat += "<b>Belly Visibility:</b><a style='display:block;width:100px' href='?_src_=prefs;preference=belly_visibility;task=input'>[features["belly_visibility"]]</a>"
+				dat += "</td>"
+				dat += APPEARANCE_CATEGORY_COLUMN
+				dat += "<h3>Butt</h3>"
+				dat += "<a style='display:block;width:50px' href='?_src_=prefs;preference=has_butt'>[features["has_butt"] == TRUE ? "Yes" : "No"]</a>"
+				if(features["has_butt"])
+					if(!pref_species.use_skintones)
+						dat += "<b>Color:</b></a><BR>"
+						dat += "<span style='border: 1px solid #161616; background-color: #[features["butt_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=butt_color;task=input'>Change</a><br>"
+					dat += "<b>Butt Size:</b><a style='display:block;width:50px' href='?_src_=prefs;preference=butt_size;task=input'>[features["butt_size"]]</a>"
+					dat += "<b>Butt Visibility:</b><a style='display:block;width:100px' href='?_src_=prefs;preference=butt_visibility;task=input'>[features["butt_visibility"]]</a>"
+				dat += "</td>"
+			dat += "</td>"
+			dat += "</tr></table>"*/
+
 		/// just kidding I moved it down here lol
 		if(ERP_TAB) // hoo haw preferences
 			if(path)
@@ -870,19 +970,19 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "<div class='notice'>Please create an account to save your preferences</div>"
 			if(NOGENITALS in pref_species.species_traits)
 				dat += "<div class='gen_setting_name'>Your species ([pref_species.name]) does not support genitals! These won't apply to your species!</div><br><hr>"
-			dat += {"<a 
+			dat += {"<a
 						href='
 							?_src_=prefs;
 							preference=erp_tab;
-							newtab=[ERP_TAB_REARRANGE]' 
+							newtab=[ERP_TAB_REARRANGE]'
 							[current_tab == ERP_TAB_REARRANGE ? "class='linkOn'" : ""]>
 								Layering and Visibility
 					</a>"}
-			dat += {"<a 
+			dat += {"<a
 						href='
 							?_src_=prefs;
 							preference=erp_tab;
-							newtab=[ERP_TAB_HOME]' 
+							newtab=[ERP_TAB_HOME]'
 							[current_tab == ERP_TAB_HOME ? "class='linkOn'" : ""]>
 								Underwear and Socks
 					</a>"}
@@ -935,7 +1035,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							Over Clothes
 							</td>"}
 					dat += {"<td class='coverage_on'>
-							<a 
+							<a
 								class='clicky_no_border'
 								href='
 									?_src_=prefs;
@@ -954,18 +1054,18 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					dat += "<tr class='undies_row'>"
 					dat += "<td class='undies_cell'>"
 					dat += "<div class='undies_label'>Topwear</div>"
-					dat += {"<a 
-								class='undies_link' 
+					dat += {"<a
+								class='undies_link'
 								href='
 									?_src_=prefs;
 									preference=undershirt;
 									task=input'>
 										[undershirt]
 							</a>"}
-					dat += {"<a 
+					dat += {"<a
 								class='undies_link'
 								style='
-									background-color:#[shirt_color]' 
+									background-color:#[shirt_color]'
 								href='
 								?_src_=prefs;
 								preference=shirt_color;
@@ -975,18 +1075,18 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					dat += "</td>"
 					dat += "<td class='undies_cell'>"
 					dat += "<div class='undies_label'>Bottomwear</div>"
-					dat += {"<a 
-								class='undies_link' 
+					dat += {"<a
+								class='undies_link'
 								href='
 									?_src_=prefs;
 									preference=underwear;
 									task=input'>
 										[underwear]
 							</a>"}
-					dat += {"<a 
+					dat += {"<a
 								class='undies_link'
 								style='
-									background-color:#[undie_color]' 
+									background-color:#[undie_color]'
 								href='
 								?_src_=prefs;
 								preference=undie_color;
@@ -996,18 +1096,18 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					dat += "</td>"
 					dat += {"<td class='undies_cell'>
 								<div class='undies_label'>Legwear</div>
-								<a 
-									class='undies_link' 
+								<a
+									class='undies_link'
 									href='
 										?_src_=prefs;
 										preference=socks;
 										task=input'>
 											[socks]
 								</a>"}
-					dat += {"<a 
+					dat += {"<a
 								class='undies_link'
 								style='
-									background-color:#[socks_color]' 
+									background-color:#[socks_color]'
 								href='
 								?_src_=prefs;
 								preference=socks_color;
@@ -1019,8 +1119,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					dat += "<tr class='undies_row'>"
 					dat += "<td class='undies_cell'>"
 					dat += "<div class='undies_label'>Backpack</div>"
-					dat += {"<a 
-								class='undies_link' 
+					dat += {"<a
+								class='undies_link'
 								href='
 								?_src_=prefs;
 								preference=bag;
@@ -1031,15 +1131,15 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					dat += "</td>"
 					dat += "<td class='undies_cell'>"
 					dat += "<div class='undies_label'>Persistent Scars</div>"
-					dat += {"<a 
-									class='undies_link' 
+					dat += {"<a
+									class='undies_link'
 									href='
 										?_src_=prefs;
 										preference=persistent_scars'>
 											Enabled
 								</a>"}
-					dat += {"<a 
-									class='undies_link' 
+					dat += {"<a
+									class='undies_link'
 									href='
 										?_src_=prefs;
 										preference=clear_scars'>
@@ -1066,12 +1166,15 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<b>Action Buttons:</b> <a href='?_src_=prefs;preference=action_buttons'>[(buttons_locked) ? "Locked In Place" : "Unlocked"]</a><br>"
 			dat += "<br>"
 			dat += "<b>PDA Color:</b> <span style='border:1px solid #161616; background-color: [pda_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=pda_color;task=input'>Change</a><BR>"
+			//dat += "<b>PDA Style:</b> <a href='?_src_=prefs;task=input;preference=pda_style'>[pda_style]</a><br>"
+			//dat += "<b>PDA Reskin:</b> <a href='?_src_=prefs;task=input;preference=pda_skin'>[pda_skin]</a><br>"
 			dat += "<br>"
 			dat += "<b>Ghost Ears:</b> <a href='?_src_=prefs;preference=ghost_ears'>[(chat_toggles & CHAT_GHOSTEARS) ?  "All Speech":"Nearest Creatures"]</a><br>"
 			dat += "<b>Ghost Radio:</b> <a href='?_src_=prefs;preference=ghost_radio'>[(chat_toggles & CHAT_GHOSTRADIO) ? "All Messages":"No Messages"]</a><br>"
 			dat += "<b>Ghost Sight:</b> <a href='?_src_=prefs;preference=ghost_sight'>[(chat_toggles & CHAT_GHOSTSIGHT) ? "All Emotes":"Nearest Creatures" ]</a><br>"
 			dat += "<b>Ghost Whispers:</b> <a href='?_src_=prefs;preference=ghost_whispers'>[(chat_toggles & CHAT_GHOSTWHISPER) ? "All Speech":"Nearest Creatures"]</a><br>"
 			dat += "<b>Ghost PDA:</b> <a href='?_src_=prefs;preference=ghost_pda'>[(chat_toggles & CHAT_GHOSTPDA) ? "All Messages" : "Nearest Creatures"]</a><br>"
+			//dat += "<b>Window Flashing:</b> <a href='?_src_=prefs;preference=winflash'>[(windowflashing) ? "Enabled":"Disabled"]</a><br>"
 			dat += "<br>"
 			dat += "<b>Play Admin MIDIs:</b> <a href='?_src_=prefs;preference=hear_midis'>[(toggles & SOUND_MIDI) ? "Enabled":"Disabled"]</a><br>"
 			dat += "<b>Play Lobby Music:</b> <a href='?_src_=prefs;preference=lobby_music'>[(toggles & SOUND_LOBBY) ? "Enabled":"Disabled"]</a><br>"
