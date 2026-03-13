@@ -1825,9 +1825,7 @@
 /obj/item/gun/ballistic/automatic/assault_rifle
 	name = "r91 assault rifle"
 	desc = "The R91 was the standard US Army assault rifle, and so saw wide-spread use after the war. Most are worn out by now."
-	icon = 'icons/obj/guns/projectile.dmi'
-	lefthand_file = 'icons/fallout/onmob/weapons/guns_lefthand.dmi'
-	righthand_file = 'icons/fallout/onmob/weapons/guns_righthand.dmi'
+	icon = 'icons/fallout/objects/guns/ballistic.dmi'
 	icon_state = "assault_rifle"
 	item_state = "r91"
 	mag_type = /obj/item/ammo_box/magazine/m556/rifle

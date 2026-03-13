@@ -15,9 +15,9 @@
 	
 	if(sprint_buffer > 0)
 		var/use = min(tiles, sprint_buffer)
-		var/special_discount = calc_sprint_stamina_mod_from_special()
-		if(HAS_TRAIT(src, TRAIT_SPEED))
-			sprint_buffer -= (use * 0.5) * special_discount
+		use *= calc_sprint_stamina_mod_from_special(tiles) // S.P.E.C.I.A.L.
+		if(HAS_TRAIT(src, TRAIT_ZOOMIES))
+			sprint_buffer -= use * 0.5
 		else
 			sprint_buffer -= (use * special_discount)
 		tiles -= use
@@ -32,13 +32,10 @@
 	var/datum/keybinding/living/hold_sprint/sprint_hold_bind = GLOB.keybindings_by_name["hold_sprint"]
 	if(!client || !((client in sprint_bind.is_down) || (client in sprint_hold_bind.is_down)))
 		disable_intentional_sprint_mode()
-		return
-	
-	// Apply stamina cost for tiles beyond buffer
-	var/stamina_modifier = calc_sprint_stamina_mod_from_special()
-	if(HAS_TRAIT(src, TRAIT_SPEED))
-		adjustStaminaLoss(tiles * sprint_stamina_cost * 0.5 * stamina_modifier)
-	else if(HAS_TRAIT(src, TRAIT_SUPER_SPEED))
+		return // if you're not holding it, you stop sprinting when you run out
+	if(HAS_TRAIT(src, TRAIT_ZOOMIES))
+		adjustStaminaLoss(tiles * sprint_stamina_cost * 0.5)
+	if(HAS_TRAIT(src, TRAIT_SUPER_ZOOMIES))
 		return
 	else
 		adjustStaminaLoss(tiles * sprint_stamina_cost * stamina_modifier)

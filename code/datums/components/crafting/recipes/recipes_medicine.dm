@@ -58,7 +58,7 @@
 	result = /obj/item/stack/medical/suture/five
 	time = 40
 	reqs = list(/obj/item/stack/medical/gauze = 1,
-				/obj/item/reagent_containers/food/snacks/grown/bloodleaf = 1)
+				/datum/reagent/medicine/styptic_powder = 10)
 	category = CAT_MEDICAL
 
 /datum/crafting_recipe/ointment
@@ -185,7 +185,7 @@
 	category = CAT_MEDICAL
 	always_available = FALSE
 */
-/*
+
 /datum/crafting_recipe/fake_stimpak
 	name = "Fake stimpak"
 	result = /obj/item/reagent_containers/hypospray/medipen/stimpak/fake
@@ -196,17 +196,6 @@
 	time = 10
 	category = CAT_MEDICAL
 	always_available = TRUE
-*/
-/datum/crafting_recipe/cheap_stimpak
-	name = "Cheap Stimpak"
-	result = /obj/item/reagent_containers/hypospray/medipen/stimpak/cheap
-	reqs = list(/obj/item/reagent_containers/food/snacks/grown/broc = 1,
-				/obj/item/reagent_containers/food/snacks/grown/xander = 1,
-				/obj/item/reagent_containers/syringe = 1)
-	tools = list(TOOL_WORKBENCH)
-	time = 10
-	category = CAT_MEDICAL
-	always_available = FALSE
 
 /datum/crafting_recipe/stimpak/chemistry // Purely chemistry recipe
 	name = "Stimpak (from chems)"
