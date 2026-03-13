@@ -1426,6 +1426,7 @@ GLOBAL_LIST_INIT(armor_token_operation_legend, list(
 /*
 
 **We're moving away from more slowdown modifiers, as they get messy and ridiculous**
+*/
 
 /* Armor slowdown modifiers
  * Multipliers to armor slowdown
@@ -1434,22 +1435,24 @@ GLOBAL_LIST_INIT(armor_token_operation_legend, list(
  * T1 - Slightly lighter materials, less clothes
  * T2 - Lightened materials, streamlined or something
  * T3 - Motorized or super ergonomic design
+*/
 
 #define ARMOR_SLOWDOWN_LESS_T1 0.9
 #define ARMOR_SLOWDOWN_LESS_T2 0.8
 #define ARMOR_SLOWDOWN_LESS_T3 0.7
 
 
+/*  
  * More armor slowdown, ack!
  * T1 - Heavier clothing or padding
  * T2 - Substantial extra plating
  * T3 - Huge slabs of metal
+ * */
 
 #define ARMOR_SLOWDOWN_MORE_T1 1.1
 #define ARMOR_SLOWDOWN_MORE_T2 1.25
 #define ARMOR_SLOWDOWN_MORE_T3 1.35
-*/
-*/
+
 /// Extra tag saying what armor tier this armor is, for description purposes
 #define ARMOR_CLOTHING_DESC "This is just a set of clothes, light and breezy, totally unencumbering. Also totally unprotected."
 

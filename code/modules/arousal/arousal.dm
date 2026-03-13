@@ -2,13 +2,13 @@
 	var/mb_cd_length = 5 SECONDS						//5 second cooldown for masturbating because fuck spam.
 	var/mb_cd_timer = 0									//The timer itself
 
-/mob/living/carbon/human
-	var/saved_underwear = ""//saves their underwear so it can be toggled later
-	var/saved_undershirt = ""
-	var/saved_socks = ""
-	var/hidden_underwear = FALSE
-	var/hidden_undershirt = FALSE
-	var/hidden_socks = FALSE
+// /mob/living/carbon/human
+// 	var/saved_underwear = ""//saves their underwear so it can be toggled later
+// 	var/saved_undershirt = ""
+// 	var/saved_socks = ""
+// 	var/hidden_underwear = FALSE
+// 	var/hidden_undershirt = FALSE
+// 	var/hidden_socks = FALSE
 
 //Mob procs
 /mob/living/carbon/human/verb/underwear_toggle()
