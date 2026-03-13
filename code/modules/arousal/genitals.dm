@@ -543,6 +543,7 @@ GLOBAL_LIST_INIT(genital_layers, list(
 	update_genitals(FALSE) // and prevents infinite loops
 
 /// clears all genital overlays, and reapplies them
+/// TODO: murderfuck pornhud, restore the classic overlay system, strangle poojawa (for no reason, just wanna)
 /mob/living/carbon/human/proc/update_genitals(signal = TRUE)
 	if(QDELETED(src))
 		return

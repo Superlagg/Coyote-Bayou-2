@@ -1,5 +1,5 @@
 GLOBAL_LIST_INIT(chemwhiz_recipes_basic, list(
-	/datum/crafting_recipe/cheap_stimpak,
+	// /datum/crafting_recipe/cheap_stimpak,
 	/datum/crafting_recipe/medx/chemistry))
 
 GLOBAL_LIST_INIT(chemwhiz_recipes_advanced, list(

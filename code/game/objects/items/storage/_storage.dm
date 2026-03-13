@@ -15,7 +15,7 @@
 
 /obj/item/storage/ComponentInitialize()
 	AddComponent(component_type)
-	//RegisterSignal(src, COMSIG_VORE_ATOM_DIGESTED, PROC_REF(dump_everything)) // TODO: Make this work
+	//RegisterSignal(src, COMSIG_VORE_ATOM_DIGESTED, .proc/dump_everything) // TODO: Make this work
 
 /obj/item/storage/AllowDrop()
 	return TRUE
@@ -29,7 +29,7 @@
 //Cyberboss says: "USE THIS TO FILL IT, NOT INITIALIZE OR NEW"
 /obj/item/storage/proc/PopulateContents()
 
-/obj/item/storage/proc/dump_everything(datum/source)
+/obj/item/storage/proc/dump_everything(datum/source, obj/vore_belly/gut, mob/living/vorer)
 	SIGNAL_HANDLER
 	if(!gut || !vorer)
 		return TRUE //No belly, no problem
