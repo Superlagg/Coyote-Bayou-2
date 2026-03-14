@@ -1697,37 +1697,37 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			magic_word = "Butt"
 			flag_string = "butt_visibility_flags"
 			override_string = "butt_visibility_override"
-			hide_nad_flag = HIDE_BUTT
+			// hide_nad_flag = HIDE_BUTT
 		if(CS_VAG)
 			magic_word = "Vagina"
 			flag_string = "vag_visibility_flags"
 			override_string = "vag_visibility_override"
-			hide_nad_flag = HIDE_VAG
+			// hide_nad_flag = HIDE_VAG
 		if(CS_BALLS)
 			magic_word = "Testicles"
 			flag_string = "balls_visibility_flags"
 			override_string = "balls_visibility_override"
-			hide_nad_flag = HIDE_BALLS
+			// hide_nad_flag = HIDE_BALLS
 		if(CS_PENIS)
 			magic_word = "Penis"
 			flag_string = "cock_visibility_flags"
 			override_string = "cock_visibility_override"
-			hide_nad_flag = HIDE_PENIS
+			// hide_nad_flag = HIDE_PENIS
 		if(CS_BELLY)
 			magic_word = "Belly"
 			flag_string = "belly_visibility_flags"
 			override_string = "belly_visibility_override"
-			hide_nad_flag = HIDE_BELLY
+			// hide_nad_flag = HIDE_BELLY
 		if(CS_BOOB)
 			magic_word = "Breasts"
 			flag_string = "breasts_visibility_flags"
 			override_string = "breasts_visibility_override"
-			hide_nad_flag = HIDE_BOOBS
+			// hide_nad_flag = HIDE_BOOBS
 		if(CS_MISC) // idk some kind of broken genital
 			magic_word = "Chunk"
 			flag_string = "breasts_visibility_flags" // idk
 			override_string = "breasts_visibility_override"
-			hide_nad_flag = HIDE_MISC
+			// hide_nad_flag = HIDE_MISC
 	var/list/doot = list()
 	doot += "<tr class='talign'>"
 	// the nad's name and index
