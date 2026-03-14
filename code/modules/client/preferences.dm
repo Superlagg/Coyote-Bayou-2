@@ -1011,7 +1011,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					dat += "<td colspan='2' class='genital_name'>Shift</td>"
 					dat += "<td colspan='2' class='genital_name'>Hidden by...</td>"
 					dat += "<td class='genital_name'>Override</td>"
-					dat += "<td class='genital_name'>See on others?</td>"
+					// dat += "<td class='genital_name'>See on others?</td>"
 					dat += "</tr>"
 
 					for(var/nad in all_genitals)
@@ -1035,13 +1035,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							Over Clothes
 							</td>"}
 					dat += {"<td class='coverage_on'>
-							<a
-								class='clicky_no_border'
-								href='
-									?_src_=prefs;
-									preference=change_genital_whitelist'>
-										Whitelisted Names
-							</a>
+							Cute =3
 							</td>"}
 					dat += "</table>"
 				if(ERP_TAB_HOME)/// UNDERWEAR GOES HERE
@@ -1697,7 +1691,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/magic_word
 	var/flag_string
 	var/override_string
-	var/hide_nad_flag
+	// var/hide_nad_flag
 	switch(has_name)
 		if(CS_BUTT)
 			magic_word = "Butt"
@@ -1809,18 +1803,18 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		</a>
 		</td>"}
 	/// and the hideflag
-	var/i_dont_like_bellies = CHECK_BITFIELD(features["genital_hide"], hide_nad_flag)
-	doot += {"<td class='[i_dont_like_bellies ? "coverage_off" : "coverage_on"]'>
-		<a
-			class='clicky_no_border'
-			href='
-				?_src_=prefs;
-				preference=genital_hide;
-				hideflag=[hide_nad_flag];
-				task=input'>
-					[i_dont_like_bellies ? "N" : "Y"]
-		</a>
-		</td>"}
+	// var/i_dont_like_bellies = CHECK_BITFIELD(features["genital_hide"], hide_nad_flag)
+	// doot += {"<td class='[i_dont_like_bellies ? "coverage_off" : "coverage_on"]'>
+	// 	<a
+	// 		class='clicky_no_border'
+	// 		href='
+	// 			?_src_=prefs;
+	// 			preference=genital_hide;
+	// 			hideflag=[hide_nad_flag];
+	// 			task=input'>
+	// 				[i_dont_like_bellies ? "N" : "Y"]
+	// 	</a>
+	// 	</td>"}
 	doot += "</tr>"
 	return doot.Join()
 
@@ -2227,21 +2221,21 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	if(href_list["preference"] == "change_genital_order")
 		shift_genital_order(href_list["which"], (href_list["direction"]=="up"))
-	if(href_list["preference"] == "change_genital_whitelist")
-		var/new_genital_whitelist = stripped_multiline_input_or_reflect(
-			user,
-			"Which people are you okay with seeing their genitals when exposed? If a humanlike mob has a name containing \
-			any of the following, if their genitals are showing, you will be able to see them, regardless of your \
-			content settings. Partial names are accepted, case is not important, please no punctuation (except ','). \
-			Keep in mind this matches their 'real' name, so 'unknown' likely won't do much. Separate your entries with a comma!",
-			"Genital Whitelist",
-			features["genital_whitelist"])
-		if(new_genital_whitelist == "")
-			var/whoathere = alert(user, "This will clear your genital whitelist, you sure?", "Just checkin'", "Yes", "No")
-			if(whoathere == "Yes")
-				features["genital_whitelist"] = new_genital_whitelist
-		else if(!isnull(new_genital_whitelist))
-			features["genital_whitelist"] = new_genital_whitelist
+	// if(href_list["preference"] == "change_genital_whitelist")
+	// 	var/new_genital_whitelist = stripped_multiline_input_or_reflect(
+	// 		user,
+	// 		"Which people are you okay with seeing their genitals when exposed? If a humanlike mob has a name containing \
+	// 		any of the following, if their genitals are showing, you will be able to see them, regardless of your \
+	// 		content settings. Partial names are accepted, case is not important, please no punctuation (except ','). \
+	// 		Keep in mind this matches their 'real' name, so 'unknown' likely won't do much. Separate your entries with a comma!",
+	// 		"Genital Whitelist",
+	// 		features["genital_whitelist"])
+	// 	if(new_genital_whitelist == "")
+	// 		var/whoathere = alert(user, "This will clear your genital whitelist, you sure?", "Just checkin'", "Yes", "No")
+	// 		if(whoathere == "Yes")
+	// 			features["genital_whitelist"] = new_genital_whitelist
+	// 	else if(!isnull(new_genital_whitelist))
+	// 		features["genital_whitelist"] = new_genital_whitelist
 	if(href_list["preference"] == "change_genital_clothing")
 		var/list/genital_overrides = GENITAL_CLOTHING_FLAG_LIST
 		var/new_visibility = input(user, "When your genitals are visible, how should they appear in relation to your clothes/underwear?", "Character Preference", href_list["nadflag"]) as null|anything in GENITAL_CLOTHING_FLAG_LIST

@@ -60,8 +60,8 @@ GLOBAL_VAR_INIT(crotch_call_cooldown, 0)
 	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_ACT, TYPE_PROC_REF(/atom,clean_blood))
 	GLOB.human_list += src
 
-	var/datum/atom_hud/data/human/genital/pornHud = GLOB.huds[GENITAL_PORNHUD]
-	pornHud.add_to_hud(src)
+	// var/datum/atom_hud/data/human/genital/pornHud = GLOB.huds[GENITAL_PORNHUD]
+	// pornHud.add_to_hud(src)
 	update_body(TRUE)
 
 /mob/living/carbon/human/ComponentInitialize()
@@ -953,40 +953,40 @@ GLOBAL_VAR_INIT(crotch_call_cooldown, 0)
 	switch(href_list["action"])
 		if("open_sockdrawer")
 			show_underwear_panel()
-		if("update_every_fucking_crotch")
-			if(COOLDOWN_FINISHED(GLOB, crotch_call_cooldown))
-				for(var/mob/living/carbon/human/dic in GLOB.human_list)
-					dic.update_genitals(TRUE)
-				COOLDOWN_START(GLOB, crotch_call_cooldown, CROTCH_COOLDOWN)
-			show_genital_hide_panel()
-		if("open_genital_hide")
-			show_genital_hide_panel()
-		if("change_genital_whitelist")
-			if(!client?.prefs)
-				return
-			var/new_genital_whitelist = stripped_multiline_input_or_reflect(
-				usr, 
-				"Which people are you okay with seeing their genitals when exposed? If a humanlike mob has a name containing \
-				any of the following, if their genitals are showing, you will be able to see them, regardless of your \
-				content settings. Partial names are accepted, case is not important, please no punctuation (except ','). \
-				Keep in mind this matches their 'real' name, so 'unknown' likely won't do much. Separate your entries with a comma!",
-				"Genital Whitelist",
-				client?.prefs?.features["genital_whitelist"])
-			if(new_genital_whitelist == "")
-				var/whoathere = alert(usr, "This will clear your genital whitelist, you sure?", "Just checkin'", "Yes", "No")
-				if(whoathere == "Yes")
-					client?.prefs?.features["genital_whitelist"] = new_genital_whitelist
-					client?.loadCockWhitelist()
-			else if(!isnull(new_genital_whitelist))
-				client?.prefs?.features["genital_whitelist"] = new_genital_whitelist
-				client?.loadCockWhitelist()
-			update_body(TRUE)
-			show_genital_hide_panel()
-		if("toggle_hide_genitals")
-			if(client?.prefs)
-				TOGGLE_BITFIELD(client.prefs.features["genital_hide"], text2num(href_list["genital_flag"]))
-			show_genital_hide_panel()
-			update_body(TRUE)
+		// if("update_every_fucking_crotch")
+		// 	if(COOLDOWN_FINISHED(GLOB, crotch_call_cooldown))
+		// 		for(var/mob/living/carbon/human/dic in GLOB.human_list)
+		// 			dic.update_genitals(TRUE)
+		// 		COOLDOWN_START(GLOB, crotch_call_cooldown, CROTCH_COOLDOWN)
+		// 	show_genital_hide_panel()
+		// if("open_genital_hide")
+		// 	show_genital_hide_panel()
+		// if("change_genital_whitelist")
+		// 	if(!client?.prefs)
+		// 		return
+		// 	var/new_genital_whitelist = stripped_multiline_input_or_reflect(
+		// 		usr, 
+		// 		"Which people are you okay with seeing their genitals when exposed? If a humanlike mob has a name containing \
+		// 		any of the following, if their genitals are showing, you will be able to see them, regardless of your \
+		// 		content settings. Partial names are accepted, case is not important, please no punctuation (except ','). \
+		// 		Keep in mind this matches their 'real' name, so 'unknown' likely won't do much. Separate your entries with a comma!",
+		// 		"Genital Whitelist",
+		// 		client?.prefs?.features["genital_whitelist"])
+		// 	if(new_genital_whitelist == "")
+		// 		var/whoathere = alert(usr, "This will clear your genital whitelist, you sure?", "Just checkin'", "Yes", "No")
+		// 		if(whoathere == "Yes")
+		// 			client?.prefs?.features["genital_whitelist"] = new_genital_whitelist
+		// 			client?.loadCockWhitelist()
+		// 	else if(!isnull(new_genital_whitelist))
+		// 		client?.prefs?.features["genital_whitelist"] = new_genital_whitelist
+		// 		client?.loadCockWhitelist()
+		// 	update_body(TRUE)
+		// 	show_genital_hide_panel()
+		// if("toggle_hide_genitals")
+		// 	if(client?.prefs)
+		// 		TOGGLE_BITFIELD(client.prefs.features["genital_hide"], text2num(href_list["genital_flag"]))
+		// 	show_genital_hide_panel()
+		// 	update_body(TRUE)
 		if("shirt")
 			var/new_shirt = input(usr, "Select a new shirt!", "Changing") as null|anything in GLOB.undershirt_list
 			if(new_shirt)
@@ -1130,6 +1130,7 @@ GLOBAL_VAR_INIT(crotch_call_cooldown, 0)
 	popup.open(FALSE)
 	onclose(src, "erp_window", src)
 
+/*
 /mob/living/carbon/human/proc/show_genital_hide_panel()
 	var/list/dat = list()
 	dat += {"<a 
@@ -1227,7 +1228,7 @@ GLOBAL_VAR_INIT(crotch_call_cooldown, 0)
 	popup.set_content(dat.Join())
 	popup.open(FALSE)
 	onclose(src, "erp_window", src)
-
+ */
 
 /mob/living/carbon/human/proc/canUseHUD()
 	return CHECK_MOBILITY(src, MOBILITY_UI)
