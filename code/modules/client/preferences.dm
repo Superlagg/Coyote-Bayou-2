@@ -393,7 +393,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if(jobban_isbanned(user, "appearance"))
 				dat += "<b>You are banned from using custom names and appearances. You can continue to adjust your characters, but you will be randomised once you join the game.</b><br>"
 			dat += "<a style='display:block;width:100px' href='?_src_=prefs;preference=name;task=random'>Random Name</A> "
-			dat += "<a style='display:block;width:150px' href='?_src_=prefs;preference=romanname;task=random'>Random Roman Name</A> "			
+			// dat += "<a style='display:block;width:150px' href='?_src_=prefs;preference=romanname;task=random'>Random Roman Name</A> "			
 			dat += "<b>Always Random Name:</b><a style='display:block;width:30px' href='?_src_=prefs;preference=name'>[be_random_name ? "Yes" : "No"]</a><BR>"
 
 			dat += "<b>Name:</b> "
