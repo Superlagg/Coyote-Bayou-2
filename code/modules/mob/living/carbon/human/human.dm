@@ -966,9 +966,9 @@ GLOBAL_VAR_INIT(crotch_call_cooldown, 0)
 		// 		return
 		// 	var/new_genital_whitelist = stripped_multiline_input_or_reflect(
 		// 		usr, 
-		// 		"Which people are you okay with seeing their genitals when exposed? If a humanlike mob has a name containing \
-		// 		any of the following, if their genitals are showing, you will be able to see them, regardless of your \
-		// 		content settings. Partial names are accepted, case is not important, please no punctuation (except ','). \
+		// 		"Which people are you okay with seeing their genitals when exposed? If a humanlike mob has a name containing 
+		// 		any of the following, if their genitals are showing, you will be able to see them, regardless of your 
+		// 		content settings. Partial names are accepted, case is not important, please no punctuation (except ','). 
 		// 		Keep in mind this matches their 'real' name, so 'unknown' likely won't do much. Separate your entries with a comma!",
 		// 		"Genital Whitelist",
 		// 		client?.prefs?.features["genital_whitelist"])
