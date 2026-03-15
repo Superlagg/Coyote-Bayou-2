@@ -11,7 +11,7 @@
 		UNSETEMPTY(client.movingmob.client_mobs_in_contents)
 		client.movingmob = null
 
-	remove_from_player_list()
+	// remove_from_player_list()
 	clear_client_in_contents()
 
 	..()
