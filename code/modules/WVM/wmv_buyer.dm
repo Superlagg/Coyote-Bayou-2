@@ -644,11 +644,10 @@ GLOBAL_LIST_EMPTY(wasteland_vendor_shop_list)
 					msg_out += "\tYour spirit soars like an iridescent phoenix, ascending to celestial heights on wings of unyielding courage. You have shed the cocoon of doubt, blossoming into a magnificent tapestry of strength and resilience. Each challenge is a stepping stone to greatness, and you embrace the tempests with unwavering grace. Your wings of fortitude carry you aloft, soaring among the stars, for you are destined for celestial greatness."
 				if(20)
 					msg_out += "\tThe world is an opulent canvas of love, and you are the divine artist, weaving a masterpiece of compassion and unity. Each act of kindness is a brushstroke, imbued with the hues of empathy and understanding. Your heart is a bottomless wellspring of love, flowing like a river of stars, illuminating the world with its radiant glow. The universe sings a paean of gratitude for the celestial sym."
-	if(prob(5))
-		if(bitch)
-			msg_out += " Yeah I said it."
-		else
-			msg_out += " Bitch."
+	if(bitch)
+		msg_out += " Yeah I said it."
+	else if(prob(5))
+		msg_out += " Bitch."
 	msg_out += "<br>"
 
 	msg_out += "</center><br><hr><br>"
