@@ -107,10 +107,11 @@
 	else
 		return !density
 
-/obj/structure/table/CanAStarPass(obj/item/card/id/ID, to_dir, atom/movable/caller)
+/obj/structure/table/CanAStarPass(ID, dir, caller)
 	. = !density
-	if(istype(caller))
-		. = . || (caller.pass_flags & PASSTABLE)
+	if(ismovable(caller))
+		var/atom/movable/mover = caller
+		. = . || (mover.pass_flags & pass_flags_self)
 
 /obj/structure/table/proc/tableplace(mob/living/user, mob/living/pushed_mob)
 	pushed_mob.forceMove(src.loc)

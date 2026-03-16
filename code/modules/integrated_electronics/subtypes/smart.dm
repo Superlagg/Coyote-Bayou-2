@@ -92,32 +92,28 @@
 	idc = new(src)
 
 /obj/item/integrated_circuit/smart/advanced_pathfinder/do_work()
-	explosion(get_turf(src), 1, 1, 1)
-	qdel(src)
-	/// shit's broken, sorry!
+	if(!assembly)
+		activate_pin(3)
+		return
+	idc.access = assembly.access_card.access
+	var/turf/a_loc = get_turf(assembly)
+	var/list/P = cir_get_path_to(assembly, locate(get_pin_data(IC_INPUT, 1),get_pin_data(IC_INPUT, 2),a_loc.z), /turf/proc/Distance_cardinal, 0, 200, id=idc, exclude=get_turf(get_pin_data_as_type(IC_INPUT,3, /atom)), simulated_only = 0)
 
-	// if(!assembly)
-	// 	activate_pin(3)
-	// 	return
-	// idc.access = assembly.access_card.access
-	// var/turf/a_loc = get_turf(assembly)
-	// var/list/P = cir_get_path_to(assembly, locate(get_pin_data(IC_INPUT, 1),get_pin_data(IC_INPUT, 2),a_loc.z), /turf/proc/Distance_cardinal, 0, 200, id=idc, exclude=get_turf(get_pin_data_as_type(IC_INPUT,3, /atom)), simulated_only = 0)
-
-	// if(!P)
-	// 	activate_pin(3)
-	// 	return
-	// else
-	// 	var/list/Xn =  new/list(P.len)
-	// 	var/list/Yn =  new/list(P.len)
-	// 	var/turf/T
-	// 	for(var/i =1 to P.len)
-	// 		T=P[i]
-	// 		Xn[i] = T.x
-	// 		Yn[i] = T.y
-	// 	set_pin_data(IC_OUTPUT, 1, Xn)
-	// 	set_pin_data(IC_OUTPUT, 2, Yn)
-	// 	push_data()
-	// 	activate_pin(2)
+	if(!P)
+		activate_pin(3)
+		return
+	else
+		var/list/Xn =  new/list(P.len)
+		var/list/Yn =  new/list(P.len)
+		var/turf/T
+		for(var/i =1 to P.len)
+			T=P[i]
+			Xn[i] = T.x
+			Yn[i] = T.y
+		set_pin_data(IC_OUTPUT, 1, Xn)
+		set_pin_data(IC_OUTPUT, 2, Yn)
+		push_data()
+		activate_pin(2)
 
 
 //Hippie Ported Code--------------------------------------------------------------------------------------------------------

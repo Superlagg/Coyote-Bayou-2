@@ -1,4 +1,3 @@
-//recommend renaming this to Poojawa.dm ~TK
 /obj/effect/proc_holder/changeling/sting
 	name = "Tiny Prick"
 	desc = "Stabby stabby."
@@ -48,7 +47,7 @@
 		return
 	if(!isturf(user.loc))
 		return
-	if(!get_path_to(user, target, max_distance = changeling.sting_range, simulated_only = FALSE))
+	if(!AStar(user, target.loc, TYPE_PROC_REF(/turf, Distance), changeling.sting_range, simulated_only = 0))
 		return
 	return 1
 

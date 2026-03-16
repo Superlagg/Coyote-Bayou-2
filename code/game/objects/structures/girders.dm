@@ -307,10 +307,11 @@
 		else
 			return 0
 
-/obj/structure/girder/CanAStarPass(obj/item/card/id/ID, to_dir, atom/movable/caller)
+/obj/structure/girder/CanAStarPass(ID, dir, caller)
 	. = !density
-	if(istype(caller))
-		. = . || (caller.pass_flags & PASSGRILLE)
+	if(ismovable(caller))
+		var/atom/movable/mover = caller
+		. = . || (mover.pass_flags & PASSGRILLE)
 
 /obj/structure/girder/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))

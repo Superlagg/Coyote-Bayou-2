@@ -637,7 +637,7 @@
 					item = I
 					break
 		if(item)
-			if(!get_path_to(src, item))
+			if(!AStar(src, get_turf(item), TYPE_PROC_REF(/turf, Distance_cardinal)))
 				item = null
 				continue
 			return item
