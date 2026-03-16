@@ -429,7 +429,7 @@ GLOBAL_LIST_EMPTY(wasteland_vendor_shop_list)
 		var/obj/item/stack/S = I
 		final_price = S.amount * final_price
 	var/fractional = final_price - FLOOR(final_price, 1)
-	if(fractional)
+	if(fractional || prob(5))
 		payout_fractional(fractional)
 	var/storedcaps = payout(final_price)
 	say("Sold [I] for [final_price] caps, bringing the total to [storedcaps] caps!")
@@ -485,7 +485,7 @@ GLOBAL_LIST_EMPTY(wasteland_vendor_shop_list)
 	var/obj/item/paper/our_paper = new(src)
 	if(!our_paper)
 		return FALSE
-	var/true_luck = rand(1, (fractional * 100))
+	var/true_luck = rand(1, clamp(fractional * 10, 1, 100))
 	our_paper.name = "[whos_it_for.name]'s fortune"
 	our_paper.info += "<br>"
 	our_paper.info += write_contents(true_luck, whos_it_for.name)
