@@ -20,6 +20,7 @@
 	var/visible_to_all = FALSE
 	///The previous icon state of the progress bar.
 	var/last_icon_state
+	var/location_type
 
 /datum/progressbar/stored
 	visible_to_all = TRUE
